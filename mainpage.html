@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <head>
+    <title>Main Page</title>
+  </head>
+
+  <header>
+    <div class="topnav">
+      <a class="active" href="#home">Home</a>
+      <a href="#contacts">Contacts</a>
+    </div>
+    <h1> Otherworldly<h1>
+  </header>
+
+<!-- Customer Search Bar -->
+  <h3>Customer</h3>
+  <div class="customerSearch">
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Customer Name">
+  </div>
+
+<!-- BoardGame Search bar -->
+  <h3>Boardgame</h3>
+  <form action="/action_page.php" method="get">
+    <input list="boardgameList" name="boardgame" id="boardgame">
+    <!-- Dropbox -->
+    <datalist id="boardgameList">
+      <option value="Genre">
+      <option value="Creator">
+      <option value="Availbility">
+    </datalist>
+    <!-- Submit button -->
+    <input type="submit">
+  </form>
+
+</div>
+</body>
+</html>
