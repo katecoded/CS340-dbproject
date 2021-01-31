@@ -6,32 +6,42 @@
   </head>
 
   <header>
-    <div class="topnav">
-      <a class="active" href="#home">Home</a>
-      <a href="#contacts">Contacts</a>
-    </div>
-    <h1> Otherworldly<h1>
+  <h1> Otherworldly<h1>
   </header>
 
-<!-- Customer Search Bar -->
+  <!-- Customer Search Bar -->
   <h3>Customer</h3>
   <div class="customerSearch">
-  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Customer Name">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Customer Name">
+    <input type="submit">
   </div>
 
-<!-- BoardGame Search bar -->
+  <!-- BoardGame Search bar -->
   <h3>Boardgame</h3>
-  <form action="/action_page.php" method="get">
-    <input list="boardgameList" name="boardgame" id="boardgame">
-    <!-- Dropbox -->
-    <datalist id="boardgameList">
-      <option value="Genre">
-      <option value="Creator">
-      <option value="Availbility">
-    </datalist>
-    <!-- Submit button -->
+  <div class="boardgameSearch">
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter BoardGame">
     <input type="submit">
-  </form>
+
+    <!-- <h3>Search By</h3> -->
+    <div class="filter-input-container">
+      <label for="filter-searchBy">Search By</label>
+      <div class="filter-input-element">
+        <select id="filter-search" class="filter-input" name="filter-search">
+          <option selected value="">Any</option>
+          <option>Name</option>
+          <option>Genre</option>
+          <option>Creator</option>
+          <option>Availbility</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <h3>Add/Remove Games</h3>
+  <button type="button">Add/Remove Games</button>
+
+  <h3>Add/Remove/Update Customer</h3>
+  <button type="button">Add/Remove/Update Customer</button>
 
 </div>
 </body>
