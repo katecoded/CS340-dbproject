@@ -1,0 +1,127 @@
+<!--
+Otherworldly Games
+
+A project by Group 28: Fellowship of Databases
+
+Team Members:
+Nancy Nguyen
+Katelyn Lindsey
+
+add_rm_games.html
+-->
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+
+	<head>
+
+
+		<meta charset="utf-8">
+
+		<title>
+			Add/Remove Games
+		</title>
+
+		<link rel="stylesheet" type="text/css" href="style.css">
+
+		<!--script type="text/javascript" src="script.js"></script-->
+
+
+	</head>
+
+
+	<body>
+
+
+		<header>
+
+
+			<h1>
+				Add/Remove Games 
+			</h1>
+
+
+		</header>
+
+
+
+		<main>
+
+
+			<!-- Add Game -->
+			<form action="" method="">
+
+				<strong>Add Game to Catalogue</strong>
+				<br/>
+
+				<label>Game Name:
+					<input type="text" name="game_name">
+				</label>
+				<br/>
+
+				<!-- for storage in intersection table Game_Creators -->
+				<label>Creator Name:
+					<input type="text" name="creator_name">
+				</label>
+				<br/>
+
+				<label>Mininum Number of Players:
+					<input type="number" name="min_num">
+				</label>
+				<br/>
+
+				<label>Maximum Number of Players:
+					<input type="number" name="max_num">
+				</label>
+				<br/>
+
+				<label>Rating:
+					<input type="number" name="rating">
+				</label>
+				<br/>
+
+				<label>Year Created:
+					<input type="number" name="min_num">
+				</label>
+				<br/><br/>
+
+				<input type="submit" value="Add" disabled>
+
+			</form>
+			<br/>
+
+
+			<!-- Delete Game -->
+			<form action="" method="">
+
+				<strong>Delete Game from Catalogue</strong>
+				<br/>
+
+				<label>Game Name:
+					<input type="text" name="game_name">
+				</label>
+				<br/>
+
+				<input type="submit" value="Delete" disabled>
+
+			</form>
+
+
+			<!-- Return to Main Page -->
+			<a href="index.html">Return to Home</a>
+
+
+		</main>
+
+
+		<footer>
+
+		</footer>
+
+
+	</body>
+
+
+</html>

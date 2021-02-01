@@ -1,0 +1,29 @@
+/*
+Otherworldly Games
+
+A project by Group 28: Fellowship of Databases
+
+Team Members:
+Nancy Nguyen
+Katelyn Lindsey
+
+style.css
+*/
+
+a {
+	display: inline-block;
+	text-align: center;
+	color: black;
+	font-size: 0.9em;
+	padding: 3px 8px;
+	text-decoration: none;
+	border: 1px solid #808080;
+}
+
+a:link, a:visited {
+	background-color: #e8e8e8;
+}
+
+a:hover, a:active {
+	background-color: #dcdcdc;
+}
