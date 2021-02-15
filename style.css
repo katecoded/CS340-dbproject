@@ -27,3 +27,21 @@ a:link, a:visited {
 a:hover, a:active {
 	background-color: #dcdcdc;
 }
+
+
+/* Navigation Bar */
+
+nav ul {
+	list-style-type: none;
+	font-size: 1.4em;
+	padding: 0px;
+	font-weight: bold;
+}
+
+nav li {
+	display: inline-block;
+}
+
+nav a {
+	border: none;
+}
