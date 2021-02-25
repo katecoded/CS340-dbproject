@@ -1,0 +1,115 @@
+<!--
+Otherworldly Games
+
+A project by Group 28: Fellowship of Databases
+
+Team Members:
+Nancy Nguyen
+Katelyn Lindsey
+
+add_rm_games.handlebars
+-->
+
+
+<main>
+
+	
+	<h3>Add Game to Catalogue</h3>
+
+	<!-- Add Game -->
+	<form action="" method="">
+
+		<label>Game Name:
+			<input type="text" name="game_name">
+		</label>
+		<br/>
+
+		<!-- for storage in intersection table Game_Creators -->
+		<label>Creator Name:
+			<input type="text" name="creator_name">
+		</label>
+		<br/>
+
+		<label>Mininum Number of Players:
+			<input type="number" name="min_num">
+		</label>
+		<br/>
+
+		<label>Maximum Number of Players:
+			<input type="number" name="max_num">
+		</label>
+		<br/>
+
+		<label>Rating:
+			<input type="number" name="rating">
+		</label>
+		<br/>
+
+		<label>Year Created:
+			<input type="number" name="min_num">
+		</label>
+		<br/>
+
+		<input type="submit" value="Add" disabled>
+
+	</form>
+	<br/>
+
+
+	<h3>Add Genre to Existing Game</h3>
+
+	<!-- Add Genres to Specific Games -->
+	<form action="" method="">
+
+		<label>Game Name:
+			<input type="text" name="game_name">
+		</label>
+		<br/>
+
+		<label>Game Genre:
+			<input type="text" name="game_genre">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update" disabled>
+	</form>
+	<br/>
+
+
+	<h3>Add Creator to Existing Game</h3>
+
+	<!-- Add Creators to Specific Games -->
+	<form action="" method="">
+
+		<label>Game Name:
+			<input type="text" name="game_name">
+		</label>
+		<br/>
+
+		<label>Game Creator:
+			<input type="text" name="game_genre">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update" disabled>
+	</form>
+	<br/>
+
+
+	<h3>Delete Game from Catalogue</h3>
+
+	<!-- Delete Game -->
+	<form action="" method="">
+
+		<label>Game Name:
+			<input type="text" name="game_name">
+		</label>
+		<br/>
+
+		<input type="submit" value="Delete" disabled>
+
+	</form>
+	<br/>
+
+
+</main>
