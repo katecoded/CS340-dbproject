@@ -39,6 +39,15 @@ app.get('/add_rm_games', function(req, res) {
 });
 
 
+app.post('/add_rm_games', function(req, res) {
+
+	console.log("Add game");
+	console.log(req);
+
+	res.render('add_rm_games');
+})
+
+
 //edit customers page
 app.get('/add_rm_update_customers', function(req, res) {
 	res.render('add_rm_update_customers');
@@ -87,7 +96,30 @@ app.get('/genres', function(req, res) {
 
 //search customers page
 app.get('/customer', function(req, res) {
-	res.render('customer');
+
+	var customerList = {};
+	console.log(req._parsedOriginalUrl.query);
+
+	var request = req._parsedOriginalUrl.query;
+
+	var first_name = request.slice(6);
+	console.log(first_name);
+
+	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name = ?";
+	var inserts = [first_name];
+
+	mysql.pool.query(query, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		customerList.customer = results;
+		console.log(customerList);
+
+		res.render('customer', customerList);
+	});
+
 });
 
 

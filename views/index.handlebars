@@ -19,9 +19,10 @@ index.handlebars
 
   <div class="customerSearch">
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Customer Name">
-    <!--input type="submit"-->
-    <a href="/customer">Submit</a>
+    <form id="searchCustomer" method="get" action="/customer">
+      <input type="text" id="fname" name="fname" placeholder="Enter Customer First Name"><br/>
+      <input type="submit" value="Submit">
+    </form>
 
   </div>
 

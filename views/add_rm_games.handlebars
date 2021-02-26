@@ -17,40 +17,40 @@ add_rm_games.handlebars
 	<h3>Add Game to Catalogue</h3>
 
 	<!-- Add Game -->
-	<form action="" method="">
+	<form action="post" method="/add_rm_games">
 
 		<label>Game Name:
-			<input type="text" name="game_name">
+			<input type="text" id="game_name" name="game_name">
 		</label>
 		<br/>
 
 		<!-- for storage in intersection table Game_Creators -->
 		<label>Creator Name:
-			<input type="text" name="creator_name">
+			<input type="text" id="creator_name" name="creator_name">
 		</label>
 		<br/>
 
 		<label>Mininum Number of Players:
-			<input type="number" name="min_num">
+			<input type="number" id="min_num" name="min_num">
 		</label>
 		<br/>
 
 		<label>Maximum Number of Players:
-			<input type="number" name="max_num">
+			<input type="number" id="max_num" name="max_num">
 		</label>
 		<br/>
 
 		<label>Rating:
-			<input type="number" name="rating">
+			<input type="number" id="rating" name="rating">
 		</label>
 		<br/>
 
 		<label>Year Created:
-			<input type="number" name="min_num">
+			<input type="number" id="min_num" name="min_num">
 		</label>
 		<br/>
 
-		<input type="submit" value="Add" disabled>
+		<input type="submit" value="Add">
 
 	</form>
 	<br/>

@@ -15,24 +15,25 @@ customer.handlebars
 
   <ul>
 
+    {{#each customer}}
     <li>Name
 
       <ul>
-        <li>First name: Michael</li>
-        <li>Last Name: Scott</li>
+        <li>First name: {{this.first_name}}</li>
+        <li>Last Name: {{this.last_name}}</li>
       </ul>
 
     </li>
 
-    <li>Email: DunderMifflin@gmail.com</li>
+    <li>Email: {{this.email}}</li>
 
-    <li>Phone: 123-234-1200</li>
+    <li>Phone: {{this.phone}}</li>
 
-    <li>Debt: $20</li>
+    <li>Debt: ${{this.debt}}</li>
 
-    <li>Favorite Creator: Scarn</li>
+    <li>Favorite Creator: {{this.favorite_creator}}</li>
 
-    <li>Favorite Genre: Suspense</li>
+    <li>Favorite Genre: {{this.favorite_genre}}</li>
 
     <li>Rentals
 
@@ -42,6 +43,7 @@ customer.handlebars
       </ul>
 
     </li>
+    {{/each}}
 
   </ul>
   <br/>
