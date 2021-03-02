@@ -21,7 +21,7 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]); //may need to change this
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 
 app.use('/', express.static('public'));
@@ -41,10 +41,19 @@ app.get('/add_rm_games', function(req, res) {
 
 app.post('/add_rm_games', function(req, res) {
 
-	console.log("Add game");
-	console.log(req);
+	console.log(req.body);
 
-	res.render('add_rm_games');
+	var query = "INSERT INTO Board_Games VALUES (NULL, ?, ?, ?, ?, ?)";
+	var inserts = [req.body.game_name, req.body.min_num, req.body.max_num, req.body.rating, req.body.year];
+
+	mysql.pool.query(query, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		res.render('add_rm_games');
+	});
 })
 
 
@@ -98,15 +107,10 @@ app.get('/genres', function(req, res) {
 app.get('/customer', function(req, res) {
 
 	var customerList = {};
-	console.log(req._parsedOriginalUrl.query);
+	console.log(req.query.fname);
 
-	var request = req._parsedOriginalUrl.query;
-
-	var first_name = request.slice(6);
-	console.log(first_name);
-
-	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name = ?";
-	var inserts = [first_name];
+	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name = ? AND last_name = ?";
+	var inserts = [req.query.fname, req.query.lname];
 
 	mysql.pool.query(query, inserts, function(error, results, fields) {
 		if(error) {

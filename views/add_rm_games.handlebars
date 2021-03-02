@@ -17,16 +17,10 @@ add_rm_games.handlebars
 	<h3>Add Game to Catalogue</h3>
 
 	<!-- Add Game -->
-	<form action="post" method="/add_rm_games">
+	<form action="/add_rm_games" method="post">
 
 		<label>Game Name:
 			<input type="text" id="game_name" name="game_name">
-		</label>
-		<br/>
-
-		<!-- for storage in intersection table Game_Creators -->
-		<label>Creator Name:
-			<input type="text" id="creator_name" name="creator_name">
 		</label>
 		<br/>
 
@@ -46,7 +40,7 @@ add_rm_games.handlebars
 		<br/>
 
 		<label>Year Created:
-			<input type="number" id="min_num" name="min_num">
+			<input type="number" id="year" name="year">
 		</label>
 		<br/>
 
