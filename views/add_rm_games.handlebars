@@ -44,6 +44,8 @@ add_rm_games.handlebars
 		</label>
 		<br/>
 
+		<input id="add" name="add" type="hidden" value="addGame">
+
 		<input type="submit" value="Add">
 
 	</form>
@@ -53,7 +55,7 @@ add_rm_games.handlebars
 	<h3>Add Genre to Existing Game</h3>
 
 	<!-- Add Genres to Specific Games -->
-	<form action="" method="">
+	<form action="/add_rm_games" method="post">
 
 		<label>Game Name:
 			<input type="text" name="game_name">
@@ -61,11 +63,14 @@ add_rm_games.handlebars
 		<br/>
 
 		<label>Game Genre:
-			<input type="text" name="game_genre">
+			<input type="text" name="genre_name">
 		</label>
 		<br/>
 
-		<input type="submit" value="Update" disabled>
+		<input id="add" name="add" type="hidden" value="addGenre">
+
+		<input type="submit" value="Add">
+
 	</form>
 	<br/>
 
@@ -73,34 +78,70 @@ add_rm_games.handlebars
 	<h3>Add Creator to Existing Game</h3>
 
 	<!-- Add Creators to Specific Games -->
-	<form action="" method="">
+	<form action="/add_rm_games" method="post">
 
 		<label>Game Name:
 			<input type="text" name="game_name">
 		</label>
 		<br/>
 
-		<label>Game Creator:
-			<input type="text" name="game_genre">
+		<label>Creator's First Name:
+			<input type="text" name="creator_fname">
 		</label>
 		<br/>
 
-		<input type="submit" value="Update" disabled>
+		<label>Creator's Last Name (if applicable):
+			<input type="text" name="creator_lname">
+		</label>
+		<br/>
+
+		<input id="add" name="add" type="hidden" value="addCreator">
+
+		<input type="submit" value="Add">
 	</form>
 	<br/>
+
+
+	<h3>Update Age of Creator</h3>
+
+	<!--Update Age of Creator-->
+	<form action="/add_rm_games" method="post">
+
+		<label>Creator's First Name:
+			<input type="text" name="creator_fname">
+		</label>
+		<br/>
+
+		<label>Creator's Last Name (if applicable):
+			<input type="text" name="creator_lname">
+		</label>
+		<br/>
+
+		<label>Creator's Age:
+			<input type="text" name="creator_age">
+		</label>
+		<br/>
+
+		<input id="add" name="add" type="hidden" value="updateAge">
+
+		<input type="submit" value="Update">
+
+	</form>
 
 
 	<h3>Delete Game from Catalogue</h3>
 
 	<!-- Delete Game -->
-	<form action="" method="">
+	<form action="/add_rm_games" method="post">
 
 		<label>Game Name:
 			<input type="text" name="game_name">
 		</label>
 		<br/>
 
-		<input type="submit" value="Delete" disabled>
+		<input id="add" name="add" type="hidden" value="deleteGame">
+
+		<input type="submit" value="Delete">
 
 	</form>
 	<br/>
