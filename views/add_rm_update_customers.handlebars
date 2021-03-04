@@ -49,7 +49,7 @@ add_rm_update_customers.handlebars
 	<h3>Delete Customer</h3>
 
 	<!-- Delete Customer -->
-	<form action="" method="">
+	<form action="/add_rm_update_customers" method="post">
 
 		<label>First Name:
 			<input type="text" name="first_name">
@@ -61,16 +61,17 @@ add_rm_update_customers.handlebars
 		</label>
 		</br>
 
-		<input type="submit" value="Delete" disabled>
+		<input type="submit" value="Delete">
+		<input id="add" name="add" type="hidden" value="deleteCustomer">
 
 	</form>
 	<br/>
 
 
-	<h3>Update Customer</h3>
+	<h3>Update Customer Debt</h3>
 
-	<!-- Update Customer -->
-	<form action="" method="">
+	<!-- Update Customer Debt -->
+	<form action="/add_rm_update_customers" method="post">
 
 		<label>First Name:
 			<input type="text" name="first_name">
@@ -82,22 +83,13 @@ add_rm_update_customers.handlebars
 		</label>
 		<br/>
 
-		<label>Email:
-			<input type="email" name="email">
-		</label>
-		<br/>
-
-		<label>Phone Number:
-			<input type="number" name="phone">
-		</label>
-		<br/>
-
 		<label>Debt:
 			<input type="number" name="debt">
 		</label>
 		<br/>
 
-		<input type="submit" value="Update" disabled>
+		<input type="submit" value="Update">
+		<input id="add" name="add" type="hidden" value="updateCustomerDebt">
 
 	</form>
 	<br/>

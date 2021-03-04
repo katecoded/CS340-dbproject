@@ -81,6 +81,39 @@ app.post('/add_rm_update_customers', function(req, res) {
             res.render('add_rm_update_customers');
         });
     }
+
+	//delete customer
+    if(req.body.add == "deleteCustomer") {
+
+    	var query = "DELETE FROM Customers WHERE first_name = ? AND last_name = ?";
+   	 	var inserts = [req.body.first_name, req.body.last_name];
+
+	    mysql.pool.query(query, inserts, function(error, results, fields) {
+	        if(error) {
+	            res.write(JSON.stringify(error));
+	            res.end();
+	        }
+
+	        res.render('add_rm_update_customers');
+	    });
+	}
+
+	//update customer debts
+    if(req.body.add == "updateCustomerDebt") {
+
+    	var query = "UPDATE `Customers` SET debt = ? WHERE first_name = ? AND last_name = ?";
+   	 	var inserts = [req.body.debt, req.body.first_name, req.body.last_name];
+
+	    mysql.pool.query(query, inserts, function(error, results, fields) {
+	        if(error) {
+	            res.write(JSON.stringify(error));
+	            res.end();
+	        }
+
+	        res.render('add_rm_update_customers');
+	    });
+	}
+
  });   
 
 
