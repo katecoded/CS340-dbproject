@@ -43,18 +43,208 @@ app.post('/add_rm_games', function(req, res) {
 
 	console.log(req.body);
 
-	var query = "INSERT INTO Board_Games VALUES (NULL, ?, ?, ?, ?, ?)";
-	var inserts = [req.body.game_name, req.body.min_num, req.body.max_num, req.body.rating, req.body.year];
+	//add game to catalogue
+	if(req.body.add == "addGame") {
 
-	mysql.pool.query(query, inserts, function(error, results, fields) {
-		if(error) {
-			res.write(JSON.stringify(error));
-			res.end();
+		var query = "INSERT INTO Board_Games VALUES (NULL, ?, ?, ?, ?, ?)";
+		var inserts = [req.body.game_name, req.body.min_num, req.body.max_num, req.body.rating, req.body.year];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			res.render('add_rm_games');
+		});
+	}
+
+	//add genre to existing game
+	else if(req.body.add == "addGenre") {
+
+		//first, insert the genre into Genres (if it already exists, ignore it)
+		var query = "INSERT IGNORE INTO Genres VALUES (NULL, ?)";
+		var inserts = [req.body.game_genre];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			//next, add entry into Game_Genres intersection table
+			var query2 = "INSERT IGNORE INTO Game_Genres VALUES ((SELECT board_game_ID FROM Board_Games WHERE game_name = ?), (SELECT genre_ID FROM Genres WHERE genre_name = ?));"
+			var inserts2 = [req.body.game_name, req.body.genre_name];
+
+			mysql.pool.query(query2, inserts2, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+
+				res.render('add_rm_games');
+			});
+		});
+	}
+
+	//add creator to existing game
+	else if(req.body.add == "addCreator") {
+
+		//if the last name is an empty string, replace with NULL
+		if(req.body.creator_lname == '') {
+			var lname = null;
+		} else {
+			var lname = req.body.creator_lname;
 		}
 
-		res.render('add_rm_games');
-	});
-})
+		//first, do a query to check if the creator's first and last name are in the database
+		//query if lname is null
+		if(lname == null) {
+			var query = "SELECT age FROM Creators WHERE first_name = ? AND last_name IS NULL";
+			var inserts = [req.body.creator_fname]
+		} else { //query if lname is not null
+			var query = "SELECT age FROM Creators WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_fname, req.body.creator_lname];
+		}
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			console.log(results);
+
+			//if the resulting query was empty, insert the creator into Creators first
+			if(results.length == 0) {
+
+
+				//insert the creator into Creators (if it already exists, ignore it)
+				var query = "INSERT IGNORE INTO Creators VALUES (NULL, ?, ?, NULL)";
+				var inserts = [req.body.creator_fname, lname];
+
+				mysql.pool.query(query, inserts, function(error, results, fields) {
+					if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+					}
+
+					//then, insert into Game_Creators
+					//query if lname is NULL
+					if(lname == null) {
+						var query2 = "INSERT IGNORE INTO Game_Creators VALUES((SELECT board_game_ID FROM Board_Games WHERE game_name = ?), (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL))";
+						var inserts2 = [req.body.game_name, req.body.creator_fname];
+					} else { //query if lname is not Null
+						var query2 = "INSERT IGNORE INTO Game_Creators VALUES((SELECT board_game_ID FROM Board_Games WHERE game_name = ?), (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?))";
+						var inserts2 = [req.body.game_name, req.body.creator_fname, lname];
+					}
+
+					mysql.pool.query(query2, inserts2, function(error, results, fields) {
+						if(error) {
+							res.write(JSON.stringify(error));
+							res.end();
+						}
+
+						res.render('add_rm_games');
+					});
+				});
+			}
+
+			//else if the query was not empty, go straight to inserting into GameCreators
+			else{
+
+				//query if lname is NULL
+				if(lname == null) {
+					var query2 = "INSERT IGNORE INTO Game_Creators VALUES((SELECT board_game_ID FROM Board_Games WHERE game_name = ?), (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL))";
+					var inserts2 = [req.body.game_name, req.body.creator_fname];
+				} else { //query if lname is not Null
+					var query2 = "INSERT IGNORE INTO Game_Creators VALUES((SELECT board_game_ID FROM Board_Games WHERE game_name = ?), (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?))";
+					var inserts2 = [req.body.game_name, req.body.creator_fname, lname];
+				}
+
+				mysql.pool.query(query2, inserts2, function(error, results, fields) {
+					if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+					}
+
+					res.render('add_rm_games');
+				});
+			}
+
+		});
+	}
+
+	//updating creator age
+	else if(req.body.add == "updateAge") {
+
+		//if the last name is an empty string, replace with NULL
+		if(req.body.creator_lname == '') {
+			var lname = null;
+		} else {
+			var lname = req.body.creator_lname;
+		}
+
+		//query if lname is NULL
+		if(lname == null) {
+			var query = "UPDATE Creators SET age = ? WHERE first_name = ? AND last_name IS NULL";
+			var inserts = [req.body.creator_age, req.body.creator_fname]
+		} else { //query if lname is not null
+			var query = "UPDATE Creators SET age = ? WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_age, req.body.creator_fname, req.body.creator_lname];
+		}
+
+		//update the age of the customer
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			res.render('add_rm_games');
+		});
+	}
+
+	//delete game from catalogue
+	//add game to catalogue
+	else if(req.body.add == "deleteGame") {
+
+		//first, delete from Game_Genres if it exists
+		var query = "DELETE FROM Game_Genres WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?)";
+		var inserts = [req.body.game_name];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			//next, delete from Game_Creators if it exists
+			var query2 = "DELETE FROM Game_Creators WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?)";
+			var inserts2 = [req.body.game_name];
+
+			mysql.pool.query(query2, inserts2, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+
+				//finally, delete from Board_Games
+				var query3 = "DELETE FROM Board_Games WHERE game_name = ?";
+				var inserts3 = [req.body.game_name];
+
+				mysql.pool.query(query3, inserts3, function(error, results, fields) {
+					if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+					}
+
+					res.render('add_rm_games');
+				});
+			});
+		});
+	}
+});
 
 
 //edit customers page
