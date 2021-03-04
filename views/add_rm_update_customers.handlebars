@@ -17,7 +17,7 @@ add_rm_update_customers.handlebars
 	<h3>Add Customer</h3>
 
 	<!-- Add Customer -->
-	<form action="" method="">
+	<form action="/add_rm_update_customers" method="post">
 
 		<label>First Name:
 			<input type="text" name="first_name">
@@ -39,7 +39,8 @@ add_rm_update_customers.handlebars
 		</label>
 		<br/>
 
-		<input type="submit" value="Add" disabled>
+		<input type="submit" value="add">
+		<input id="add" name="add" type="hidden" value="addCustomer">
 
 	</form>
 	<br/>

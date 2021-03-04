@@ -62,6 +62,27 @@ app.get('/add_rm_update_customers', function(req, res) {
 	res.render('add_rm_update_customers');
 });
 
+app.post('/add_rm_update_customers', function(req, res) {
+
+    console.log(req.body);
+
+    //add game to catalogue
+    if(req.body.add == "addCustomer") {
+
+        var query = "INSERT INTO Customers VALUES (NULL, ?, ?, ?, ?, 0, NULL, NULL)";
+        var inserts = [req.body.first_name, req.body.last_name, req.body.email, req.body.phone];
+
+        mysql.pool.query(query, inserts, function(error, results, fields) {
+            if(error) {
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+
+            res.render('add_rm_update_customers');
+        });
+    }
+ });   
+
 
 //view all creators page
 app.get('/creators', function(req, res) {
