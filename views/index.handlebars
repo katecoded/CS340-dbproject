@@ -20,9 +20,13 @@ index.handlebars
   <div class="customerSearch">
 
     <form id="searchCustomer" method="get" action="/customer">
+
       <input type="text" id="fname" name="fname" placeholder="Enter Customer First Name"><br/>
+
       <input type="text" id="lname" name="lname" placeholder="Enter Customer Last Name"><br/>
+
       <input type="submit" value="Submit">
+
     </form>
 
   </div>
@@ -33,30 +37,31 @@ index.handlebars
 
   <div class="boardgameSearch">
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter BoardGame">
-    <!--input type="submit"-->
-    <a href="/boardgame">Submit</a>
+    <form id="searchGame" method="get" action="/boardgame">
 
-    <!-- <h3>Search By</h3> -->
-    <div class="filter-input-container">
+      <input type="text" name="gameInfo" id="gameInfo">
 
-      <label for="filter-searchBy">Search By</label>
+      <!-- Search By</h3> -->
+      <div class="filter-input-container">
 
-      <div class="filter-input-element">
+        <label for="filter-searchBy">Search By</label>
 
-        <select id="filter-search" class="filter-input" name="filter-search">
+        <div class="filter-input-element">
 
-          <option selected value="">Any</option>
-          <option>Name</option>
-          <option>Genre</option>
-          <option>Creator</option>
-          <option>Availbility</option>
+          <select id="filter-search" class="filter-input" name="filterBy">
 
-        </select>
+            <option selected value="name" name="byName">Name</option>
+            <option value="genre" name="byGenre">Genre</option>
+            <option value="creator" name="byCreator">Creator</option>
+            <option value="availability" name="byAvailable">Availbility</option>
+
+          </select>
+
+        </div>
 
       </div>
 
-    </div>
+    </form>
 
   </div>
 

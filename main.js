@@ -353,8 +353,8 @@ app.get('/customer', function(req, res) {
 	var customerList = {};
 	console.log(req.query.fname);
 
-	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name = ? AND last_name = ?";
-	var inserts = [req.query.fname, req.query.lname];
+	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name LIKE ? AND last_name LIKE ?";
+	var inserts = ["%" + req.query.fname + "%", "%" + req.query.lname + "%"];
 
 	mysql.pool.query(query, inserts, function(error, results, fields) {
 		if(error) {
@@ -373,7 +373,49 @@ app.get('/customer', function(req, res) {
 
 //search boardgames page
 app.get('/boardgame', function(req, res) {
-	res.render('boardgame');
+
+	var gameList = {};
+	console.log(req.query.gameInfo, req.query.filterBy);
+
+	if(req.query.filterBy == "name") {
+
+		var query = "SELECT * FROM Board_Games WHERE game_name LIKE ?";
+		var inserts = ["%" + req.query.gameInfo + "%"];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			console.log(results);
+			gameList.game = results;
+			console.log(gameList);
+
+			res.render('boardgame', gameList);
+		});
+
+	}
+
+	else if(req.query.filterBy == "genre") {
+
+		var query = "SELECT * FROM Board_Games INNER JOIN Game_Genres ON Game_Genres.board_game_ID = Board_Games.board_game_ID WHERE Game_Genres.genre_ID = (SELECT genre_ID FROM Genres WHERE genre_name LIKE ?)";
+		var inserts = ["%" + req.query.gameInfo + "%"];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			console.log(results);
+			gameList.game = results;
+			console.log(gameList);
+
+			res.render('boardgame', gameList);
+		});
+	}
+
 });
 
 
