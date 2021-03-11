@@ -10,43 +10,72 @@ Katelyn Lindsey
 customer.handlebars
 -->
 
-
 <main>
-
   <ul>
-
     {{#each customer}}
-    <li>Name
+    <!-- - -->
+  <table>
 
-      <ul>
-        <li>First name: {{this.first_name}}</li>
-        <li>Last Name: {{this.last_name}}</li>
-      </ul>
+    <tr>
+      <th colspan="2">
+        {{this.first_name}}
+        {{this.last_name}}
+      </th>
+    </tr>
 
-    </li>
+    <tr>
+      <td>
+        Email
+      </td>
+      <td>
+        {{this.email}}
+      </td>
+    </tr>
 
-    <li>Email: {{this.email}}</li>
+    <tr>
+      <td>
+        Phone
+      </td>
+      <td>
+        {{this.phone}}
+      </td>
+    </tr>
 
-    <li>Phone: {{this.phone}}</li>
-
-    <li>Debt: ${{this.debt}}</li>
-
-    <li>Favorite Creator: {{this.favorite_creator}}</li>
-
-    <li>Favorite Genre: {{this.favorite_genre}}</li>
-
-    <li>Rentals
-
-      <ul>
-        <li>Game Title: A Game of Thrones Boardgame Second Edition</li>
-          <a href="/return">Return</a>
-      </ul>
-
-    </li>
+    <tr>
+      <td>
+        Debt
+      </td>
+      <td>
+        {{this.debt}}
+      </td>
+    </tr>
     {{/each}}
 
-  </ul>
-  <br/>
+    <tr>
+      <td>
+        Favorite creator
+      </td>
+      {{#each creator}}
+      <td>
+        {{this.first_name}}
+        {{this.last_name}}
+      </td>
+      {{/each}}
+    </tr>
+
+    <tr>
+      <td>
+        Favorite genre
+      </td>
+      {{#each genre}}
+      <td>
+        {{this.genre_name}}
+      </td>
+      {{/each}}
+    </tr>
+
+  </table>
+
 
 
 </main>

@@ -13,7 +13,7 @@ add_rm_update_customers.handlebars
 
 <main>
 
-	
+
 	<h3>Add Customer</h3>
 
 	<!-- Add Customer -->
@@ -90,6 +90,106 @@ add_rm_update_customers.handlebars
 
 		<input type="submit" value="Update">
 		<input id="add" name="add" type="hidden" value="updateCustomerDebt">
+
+	</form>
+	<br/>
+
+
+	<h3>Update Customer Favorite Creator</h3>
+
+	<!-- Update Customer Favorite Creator-->
+	<form action="/add_rm_update_customers" method="post">
+
+		<label>Customer First Name:
+			<input type="text" name="first_name">
+		</label>
+		<br/>
+
+		<label>Customer Last Name:
+			<input type="text" name="last_name">
+		</label>
+		<br/>
+
+		<label>Creator First Name:
+			<input type="text" name="creator_fname">
+		</label>
+		<br/>
+
+		<label>Creator Last Name:
+			<input type="text" name="creator_lname">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update">
+		<input id="add" name="add" type="hidden" value="updateCustomerFavoriteCreator">
+
+	</form>
+	<br/>
+
+	<h3>Update Customer Favorite Genre</h3>
+
+	<!-- Update Customer Favorite Genre -->
+	<form action="/add_rm_update_customers" method="post">
+
+		<label>Customer First Name:
+			<input type="text" name="first_name">
+		</label>
+		<br/>
+
+		<label>Customer Last Name:
+			<input type="text" name="last_name">
+		</label>
+		<br/>
+
+		<label>Genre:
+			<input type="text" name="genre_name">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update">
+		<input id="add" name="add" type="hidden" value="updateCustomerFavoriteGenre">
+
+	</form>
+	<br/>
+
+	<h3>Delete Customer Favorite Creator</h3>
+
+	<!-- Delete Customer Favorite Creator-->
+	<form action="/add_rm_update_customers" method="post">
+
+		<label>Customer First Name:
+			<input type="text" name="first_name">
+		</label>
+		<br/>
+
+		<label>Customer Last Name:
+			<input type="text" name="last_name">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update">
+		<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteCreator">
+
+	</form>
+	<br/>
+
+	<h3>Delete Customer Favorite Genre</h3>
+
+	<!-- Delete Customer Favorite Creator-->
+	<form action="/add_rm_update_customers" method="post">
+
+		<label>Customer First Name:
+			<input type="text" name="first_name">
+		</label>
+		<br/>
+
+		<label>Customer Last Name:
+			<input type="text" name="last_name">
+		</label>
+		<br/>
+
+		<input type="submit" value="Update">
+		<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteGenre">
 
 	</form>
 	<br/>

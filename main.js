@@ -304,8 +304,84 @@ app.post('/add_rm_update_customers', function(req, res) {
 	    });
 	}
 
- });   
+	//update customer favorite creator
+		if(req.body.add == "updateCustomerFavoriteCreator") {
+			//if the last name is an empty string, replace with NULL
 
+			if(req.body.creator_lname == '') {
+				var lname = null;
+			} else {
+				var lname = req.body.creator_lname;
+			}
+
+			//query if lname is NULL
+			if(lname == null) {
+				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL) WHERE first_name = ? AND last_name = ?";
+				var inserts = [req.body.creator_fname, req.body.first_name, req.body.last_name]
+			} else { //query if lname is not null
+				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?) WHERE first_name = ? AND last_name = ?";
+				var inserts = [req.body.creator_fname, lname, req.body.first_name, req.body.last_name];
+			}
+
+			mysql.pool.query(query, inserts, function(error, results, fields) {
+					if(error) {
+							res.write(JSON.stringify(error));
+							res.end();
+					}
+
+					res.render('add_rm_update_customers');
+			});
+	}
+
+	//update customer favorite genre
+	if(req.body.add == "updateCustomerFavoriteGenre") {
+
+		var query = "UPDATE Customers SET favorite_genre = (SELECT genre_ID FROM Genres WHERE genre_name = ?) WHERE first_name = ? AND last_name = ?";
+		var inserts = [req.body.genre_name, req.body.first_name, req.body.last_name];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+				if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+				}
+
+				res.render('add_rm_update_customers');
+		});
+	}
+
+	 //delete customer favorite creator
+	 if(req.body.add == "deleteCustomerFavoriteCreator") {
+
+ 		var query = "UPDATE Customers SET favorite_creator = NULL WHERE first_name = ? AND last_name = ?";
+ 		var inserts = [req.body.first_name, req.body.last_name];
+
+ 		mysql.pool.query(query, inserts, function(error, results, fields) {
+ 				if(error) {
+ 						res.write(JSON.stringify(error));
+ 						res.end();
+ 				}
+
+ 				res.render('add_rm_update_customers');
+ 		});
+ 	}
+
+	//delete customer favorite creator
+	if(req.body.add == "deleteCustomerFavoriteGenre") {
+
+	 var query = "UPDATE Customers SET favorite_genre = NULL WHERE first_name = ? AND last_name = ?";
+	 var inserts = [req.body.first_name, req.body.last_name];
+
+	 mysql.pool.query(query, inserts, function(error, results, fields) {
+			 if(error) {
+					 res.write(JSON.stringify(error));
+					 res.end();
+			 }
+
+			 res.render('add_rm_update_customers');
+	 });
+ }
+
+ });
 
 //view all creators page
 app.get('/creators', function(req, res) {
@@ -353,8 +429,8 @@ app.get('/customer', function(req, res) {
 	var customerList = {};
 	console.log(req.query.fname);
 
-	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name = ? AND last_name = ?";
-	var inserts = [req.query.fname, req.query.lname];
+	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name LIKE ? AND last_name LIKE ?";
+	var inserts = ["%" + req.query.fname + "%", "%" + req.query.lname + "%"];
 
 	mysql.pool.query(query, inserts, function(error, results, fields) {
 		if(error) {
@@ -363,9 +439,28 @@ app.get('/customer', function(req, res) {
 		}
 
 		customerList.customer = results;
-		console.log(customerList);
 
-		res.render('customer', customerList);
+		var subquery = "SELECT first_name, last_name FROM Creators WHERE creator_ID = ?";
+		console.log(customerList.customer[0].favorite_creator);
+		var subinserts = [customerList.customer[0].favorite_creator];
+		mysql.pool.query(subquery, subinserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			customerList.creator = results;
+			var subsubquery = "SELECT genre_name FROM Genres WHERE genre_ID = ?";
+			var subsubinserts = [customerList.customer[0].favorite_genre];
+			mysql.pool.query(subsubquery, subsubinserts, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+				customerList.genre = results;
+				res.render('customer', customerList);
+				console.log(customerList);
+			});
+		});
 	});
 
 });
