@@ -351,7 +351,6 @@ app.get('/genres', function(req, res) {
 app.get('/customer', function(req, res) {
 
 	var customerList = {};
-	console.log(req.query.fname);
 
 	var query = "SELECT first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name LIKE ? AND last_name LIKE ?";
 	var inserts = ["%" + req.query.fname + "%", "%" + req.query.lname + "%"];
@@ -388,7 +387,6 @@ app.get('/boardgame', function(req, res) {
 				res.end();
 			}
 
-			console.log(results);
 			gameList.game = results;
 			console.log(gameList);
 
@@ -408,7 +406,23 @@ app.get('/boardgame', function(req, res) {
 				res.end();
 			}
 
-			console.log(results);
+			gameList.game = results;
+			console.log(gameList);
+
+			res.render('boardgame', gameList);
+		});
+	}
+
+	else if(req.query.filterBy == "creator") {
+		var query = "SELECT * FROM Board_Games INNER JOIN Game_Creators ON Game_Creators.board_game_ID = Board_Games.board_game_ID WHERE Game_Creators.creator_ID = (SELECT creator_ID FROM Creators WHERE first_name LIKE ?)";
+		var inserts = ["%" + req.query.gameInfo + "%"]
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
 			gameList.game = results;
 			console.log(gameList);
 
