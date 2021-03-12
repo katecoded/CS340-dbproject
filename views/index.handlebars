@@ -13,17 +13,20 @@ index.handlebars
 
 <main>
 
-  <!-- Customer Search Bar -->
-  <h3>Search Customers</h3>
 
+  <div class="pretty-forms">
 
-  <div class="customerSearch">
+    <!-- Customer Search Bar -->
+    <h3>Search Customers</h3>
 
     <form id="searchCustomer" method="get" action="/customer">
 
-      <input type="text" id="fname" name="fname" placeholder="Enter Customer First Name"><br/>
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname">
+      <br/>
 
-      <input type="text" id="lname" name="lname" placeholder="Enter Customer Last Name"><br/>
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname"><br/>
 
       <input type="submit" value="Submit">
 
@@ -32,10 +35,10 @@ index.handlebars
   </div>
 
 
-  <!-- BoardGame Search bar -->
-  <h3>Search Boardgames</h3>
+  <div class="pretty-forms">
 
-  <div class="boardgameSearch">
+    <!-- BoardGame Search bar -->
+    <h3>Search Boardgames</h3>
 
     <form id="searchGame" method="get" action="/boardgame">
 
@@ -44,7 +47,7 @@ index.handlebars
       <!-- Search By</h3> -->
       <div class="filter-input-container">
 
-        <label for="filter-searchBy">Search By</label>
+        <label for="filter-searchBy">Search By...</label>
 
         <div class="filter-input-element">
 

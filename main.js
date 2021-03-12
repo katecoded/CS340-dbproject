@@ -35,7 +35,23 @@ app.get('/', function(req, res) {
 
 //edit games page
 app.get('/add_rm_games', function(req, res) {
-	res.render('add_rm_games');
+
+	var gameList = {};
+
+	var query = "SELECT * FROM Board_Games";
+
+	mysql.pool.query(query, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		gameList.game = results;
+
+		console.log(results);
+
+		res.render('add_rm_games', gameList);
+	});
 });
 
 

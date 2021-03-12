@@ -11,140 +11,203 @@ add_rm_games.handlebars
 -->
 
 
-<main>
+<main id="grid-container">
 
 	
-	<h3>Add Game to Catalogue</h3>
-
-	<!-- Add Game -->
-	<form action="/add_rm_games" method="post">
-
-		<label>Game Name:
-			<input type="text" id="game_name" name="game_name">
-		</label>
-		<br/>
-
-		<label>Mininum Number of Players:
-			<input type="number" id="min_num" name="min_num">
-		</label>
-		<br/>
-
-		<label>Maximum Number of Players:
-			<input type="number" id="max_num" name="max_num">
-		</label>
-		<br/>
-
-		<label>Rating:
-			<input type="number" id="rating" name="rating">
-		</label>
-		<br/>
-
-		<label>Year Created:
-			<input type="number" id="year" name="year">
-		</label>
-		<br/>
-
-		<input id="add" name="add" type="hidden" value="addGame">
-
-		<input type="submit" value="Add">
-
-	</form>
-	<br/>
+	<div id="left-col">
 
 
-	<h3>Add Genre to Existing Game</h3>
+		<div class="pretty-forms">
 
-	<!-- Add Genres to Specific Games -->
-	<form action="/add_rm_games" method="post">
+			<h3>Add Game to Catalogue</h3>
 
-		<label>Game Name:
-			<input type="text" name="game_name">
-		</label>
-		<br/>
+			<!-- Add Game -->
+			<form action="/add_rm_games" method="post">
 
-		<label>Game Genre:
-			<input type="text" name="genre_name">
-		</label>
-		<br/>
+				<label for="game_name">Game Name:</label>
+				<input type="text" id="game_name" name="game_name">
+				<br/>
 
-		<input id="add" name="add" type="hidden" value="addGenre">
+				<label for="min_num">Mininum Number of Players:</label>
+				<input type="number" id="min_num" name="min_num">
+				<br/>
 
-		<input type="submit" value="Add">
+				<label for="max_num">Maximum Number of Players:</label>
+				<input type="number" id="max_num" name="max_num">
+				<br/>
 
-	</form>
-	<br/>
+				<label for="rating">Rating:</label>
+				<input type="number" id="rating" name="rating">
+				<br/>
 
+				<label for="year">Year Created:</label>
+				<input type="number" id="year" name="year">
+				<br/>
 
-	<h3>Add Creator to Existing Game</h3>
+				<input id="add" name="add" type="hidden" value="addGame">
 
-	<!-- Add Creators to Specific Games -->
-	<form action="/add_rm_games" method="post">
+				<input type="submit" value="Add">
 
-		<label>Game Name:
-			<input type="text" name="game_name">
-		</label>
-		<br/>
+			</form>
 
-		<label>Creator's First Name:
-			<input type="text" name="creator_fname">
-		</label>
-		<br/>
-
-		<label>Creator's Last Name (if applicable):
-			<input type="text" name="creator_lname">
-		</label>
-		<br/>
-
-		<input id="add" name="add" type="hidden" value="addCreator">
-
-		<input type="submit" value="Add">
-	</form>
-	<br/>
+		</div>
 
 
-	<h3>Update Age of Creator</h3>
+		<div class="pretty-forms">
 
-	<!--Update Age of Creator-->
-	<form action="/add_rm_games" method="post">
+			<h3>Add Genre to Existing Game</h3>
 
-		<label>Creator's First Name:
-			<input type="text" name="creator_fname">
-		</label>
-		<br/>
+			<!-- Add Genres to Specific Games -->
+			<form action="/add_rm_games" method="post">
 
-		<label>Creator's Last Name (if applicable):
-			<input type="text" name="creator_lname">
-		</label>
-		<br/>
+				<label for="game_name">Game Name:</label>
+				<input type="text" name="game_name">
+				<br/>
 
-		<label>Creator's Age:
-			<input type="text" name="creator_age">
-		</label>
-		<br/>
+				<label for="genre_name">Game Genre:</label>
+				<input type="text" name="genre_name">
+				<br/>
 
-		<input id="add" name="add" type="hidden" value="updateAge">
+				<input id="add" name="add" type="hidden" value="addGenre">
 
-		<input type="submit" value="Update">
+				<input type="submit" value="Add">
 
-	</form>
+			</form>
+
+		</div>
 
 
-	<h3>Delete Game from Catalogue</h3>
+		<div class="pretty-forms">
 
-	<!-- Delete Game -->
-	<form action="/add_rm_games" method="post">
+			<h3>Add Creator to Existing Game</h3>
 
-		<label>Game Name:
-			<input type="text" name="game_name">
-		</label>
-		<br/>
+			<!-- Add Creators to Specific Games -->
+			<form action="/add_rm_games" method="post">
 
-		<input id="add" name="add" type="hidden" value="deleteGame">
+				<label for="game_name">Game Name:</label>
+				<input type="text" name="game_name">
+				<br/>
 
-		<input type="submit" value="Delete">
+				<label for="creator_fname">Creator's First Name:</label>
+				<input type="text" name="creator_fname">
+				<br/>
 
-	</form>
-	<br/>
+				<label for="creator_lname">Creator's Last Name (if applicable):</label>
+				<input type="text" name="creator_lname">
+				<br/>
+
+				<input id="add" name="add" type="hidden" value="addCreator">
+
+				<input type="submit" value="Add">
+			</form>
+		
+		</div>
+
+
+		<div class="pretty-forms">
+
+			<h3>Update Age of Creator</h3>
+
+			<!--Update Age of Creator-->
+			<form action="/add_rm_games" method="post">
+
+				<label for="creator_fname">Creator's First Name:</label>
+				<input type="text" name="creator_fname">
+				<br/>
+
+				<label for="creator_lname">Creator's Last Name (if applicable):</label>
+				<input type="text" name="creator_lname">
+				<br/>
+
+				<label for="creator_age">Creator's Age:</label>
+				<input type="text" name="creator_age">
+				<br/>
+
+				<input id="add" name="add" type="hidden" value="updateAge">
+
+				<input type="submit" value="Update">
+
+			</form>
+
+		</div>
+
+
+		<div class="pretty-forms">
+
+			<h3>Delete Game from Catalogue</h3>
+
+			<!-- Delete Game -->
+			<form action="/add_rm_games" method="post">
+
+				<label for="game_name">Game Name:</label>
+				<input type="text" name="game_name">
+				<br/>
+
+				<input id="add" name="add" type="hidden" value="deleteGame">
+
+				<input type="submit" value="Delete">
+
+			</form>
+			
+		</div>
+
+
+	</div>
+
+
+	<div id="right-col">
+
+		<h3>All Games</h3>
+
+		{{#each game}}
+  		<table class="pretty-tables">
+
+	    	<tr>
+	      		<th colspan="2">
+	        		{{this.game_name}}
+	      		</th>
+	    	</tr>
+
+	    	<tr>
+	      		<td>
+	        		Minimum # Of Players
+	      		</td>
+	      		<td>
+	        		{{this.min_num_player}}
+	      		</td>
+	    	</tr>
+
+	    	<tr> 
+	      		<td>
+	        		Maximum # Of Players
+	      		</td>
+	      		<td>
+	        		{{this.max_num_player}}
+	      		</td>
+	   		</tr>
+
+	    	<tr>
+	      		<td>
+	        		Rating
+	      		</td>
+	      		<td>
+	        		{{this.rating}}
+	      		</td>
+	    	</tr>
+
+	    	<tr>
+	      		<td>
+	        		Year Created
+	      		</td>
+	      		<td>
+	        		{{this.year_created}}
+	      		</td>
+	    	</tr>
+
+ 		</table>
+  		{{/each}}
+
+	</div>
 
 
 </main>
