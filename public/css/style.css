@@ -121,6 +121,7 @@ nav a {
 	border: 1px solid black;
 	width: 75%;
 	margin: 0px auto 20px auto;
+	max-width: 600px;
 }
 
 .pretty-tables td, .pretty-tables th {
@@ -132,6 +133,14 @@ nav a {
 	background-color: #f8f8f8;
 }
 
+.pretty-tables td {
+	word-wrap: break-word;
+}
+
+.pretty-tables tr td:first-of-type {
+	font-weight: 500;
+}
+
 
 /* Add/Edit Pages */
 #right-col h3 {
@@ -139,7 +148,7 @@ nav a {
 }
 
 
-@media only screen and (min-width: 950px) {
+@media only screen and (min-width: 970px) {
 
 	/* Add/Edit Pages */
 	#grid-container {
