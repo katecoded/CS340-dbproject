@@ -407,9 +407,120 @@ app.post('/add_rm_games', function(req, res) {
 });
 
 
+function addFavoriteGenres(customerList, genreList) {
+	//Takes a list of customers and genres, and changes the genre ids to the name
+	
+	//iterate through the list of customers
+	for(var i = 0; i < customerList.customer.length; i++) {
+
+		//if this customer has a favorite genre
+		if(customerList.customer[i].favorite_genre != null) {
+
+			//iterate through the list of genres
+			for(var j = 0; j < genreList.length; j++) {
+
+				//if the genre_ID is the same as the favorite genre
+				if(genreList[j].genre_ID == customerList.customer[i].favorite_genre) {
+
+					//set the favorite genre to the name of the genre instead of the id
+					customerList.customer[i].favorite_genre = genreList[j].genre_name;
+				}
+			}
+		}
+	}
+
+	//return the customer list, now with genre names
+	return customerList;
+}
+
+
+function addFavoriteCreators(customerList, creatorList) {
+	//Takes a list of customers and creators, and changes the creator ids to the name
+	
+	//iterate through the list of customers
+	for(var i = 0; i < customerList.customer.length; i++) {
+
+		//if this customer has a favorite creator
+		if(customerList.customer[i].favorite_creator != null) {
+
+			//iterate through the list of creators
+			for(var j = 0; j < creatorList.length; j++) {
+
+				//if the creator_ID is the same as the favorite creator
+				if(creatorList[j].creator_ID == customerList.customer[i].favorite_creator) {
+
+					//if the creator has a last name
+					if(creatorList[j].last_name != null) {
+						//add first and last name instead of id
+						customerList.customer[i].favorite_creator = creatorList[j].first_name + " " + creatorList[j].last_name;
+					}
+					//else if there is no last name
+					else{
+						//add first name instead of id
+						customerList.customer[i].favorite_creator = creatorList[j].first_name;
+					}
+				}
+			}
+		}
+	}
+
+	//return the customer list, now with creator names
+	return customerList;
+}
+
+
 //edit customers page
 app.get('/add_rm_update_customers', function(req, res) {
-	res.render('add_rm_update_customers');
+
+	var customerList = {};
+
+	//first, get all of the customer information
+	var query = "SELECT * FROM Customers ORDER BY last_name ASC";
+
+	mysql.pool.query(query, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		customerList.customer = results;
+
+		//concatenate the first and last name together
+		for(var i = 0; i < customerList.customer.length; i++) {
+
+			customerList.customer[i].full_name = customerList.customer[i].first_name + " " + customerList.customer[i].last_name;
+		}
+
+		//next, get all of the genres
+		var query2 = "SELECT * FROM Genres";
+
+		mysql.pool.query(query2, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			//change the customers' favorite genres to be the genre_name instead of the id
+			customerList = addFavoriteGenres(customerList, results);
+
+
+			//next, get all of the creators
+			var query3 = "SELECT * FROM Creators";
+
+			mysql.pool.query(query3, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+
+				//change the customers' favorite creators to be the first_name (and last_name) instead of the id
+				customerList = addFavoriteCreators(customerList, results);
+
+				console.log(customerList);
+				res.render('add_rm_update_customers', customerList);
+			});
+		});
+	});
 });
 
 app.post('/add_rm_update_customers', function(req, res) {
@@ -542,6 +653,7 @@ app.post('/add_rm_update_customers', function(req, res) {
  }
 
  });
+
 
 //view all creators page
 app.get('/creators', function(req, res) {
@@ -691,13 +803,13 @@ app.get('/boardgame', function(req, res) {
 //return game page
 app.get('/return', function(req, res) {
 	res.render('return');
-})
+});
 
 
 //rent game page
 app.get('/rental', function(req, res) {
 	res.render('rental');
-})
+});
 
 
 //404 error
