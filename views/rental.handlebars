@@ -13,39 +13,75 @@ rental.handlebars
 
 <main>
 
-	<!-- game information -->
-	Game Title: A Game of Thrones Boardgame Second Edition
+	{{#each game}}
+		<table class="pretty-tables">
 
-	<ul>
+			<tr>
+					<th colspan="2">
+						{{this.game_name}}
+					</th>
+			</tr>
 
-		<li>
-			Summary: Lord of the Rings is a board game based on the high fantasy novel The Lord of the Rings by J. R. R. Tolkien. Published in 2000 by Kosmos in Germany, Wizards of the Coast in the U.S., and Parker Brothers in the U.K., the game is designed by Reiner Knizia and features artwork by illustrator John Howe.
-		</li>
+			<tr>
+					<td>
+						Minimum # Of Players
+					</td>
+					<td>
+						{{this.min_num_player}}
+					</td>
+			</tr>
 
-		<li>
-			Minimum Player: 2
-		</li>	
+			<tr>
+					<td>
+						Maximum # Of Players
+					</td>
+					<td>
+						{{this.max_num_player}}
+					</td>
+			</tr>
 
-		<li>
-			Maximum Player: 5
-		</li>
+			<tr>
+					<td>
+						Rating
+					</td>
+					<td>
+						{{this.rating}}/10
+					</td>
+			</tr>
 
-		<li>
-			Rating: 8.1/10
-		</li>
+			<tr>
+					<td>
+						Year Created
+					</td>
+					<td>
+						{{this.year_created}}
+					</td>
+			</tr>
 
-		<li>
-			Year Created: 2000
-		</li>
-
-	</ul>
-	<br/>
-
+			<tr>
+				<td>
+					Genres
+				</td>
+				<td>
+					{{this.genres}}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Creators
+				</td>
+				<td>
+					{{this.creators}}
+				</td>
+			</tr>
+	</table>
+		{{/each}}
 
 	<!-- customer to rent the game -->
 	<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter Customer Name">
     <!--input type="submit"-->
-    <button inactive>Rent</button>
+    <!-- <button>Rent</button> -->
+		  <button inactive>Rent</button>
     <br/><br/>
 
 
