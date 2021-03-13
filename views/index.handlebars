@@ -13,50 +13,57 @@ index.handlebars
 
 <main>
 
-  <!-- Customer Search Bar -->
-  <h3>Search Customers</h3>
 
+  <div class="pretty-forms">
 
-  <div class="customerSearch">
+    <!-- Customer Search Bar -->
+    <h3>Search Customers</h3>
 
     <form id="searchCustomer" method="get" action="/customer">
-      <input type="text" id="fname" name="fname" placeholder="Enter Customer First Name"><br/>
-      <input type="text" id="lname" name="lname" placeholder="Enter Customer Last Name"><br/>
+
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname">
+      <br/>
+
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname"><br/>
+
       <input type="submit" value="Submit">
+
     </form>
 
   </div>
 
 
-  <!-- BoardGame Search bar -->
-  <h3>Search Boardgames</h3>
+  <div class="pretty-forms">
 
-  <div class="boardgameSearch">
+    <!-- BoardGame Search bar -->
+    <h3>Search Boardgames</h3>
 
-    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Enter BoardGame">
-    <!--input type="submit"-->
-    <a href="/boardgame">Submit</a>
+    <form id="searchGame" method="get" action="/boardgame">
 
-    <!-- <h3>Search By</h3> -->
-    <div class="filter-input-container">
+      <input type="text" name="gameInfo" id="gameInfo">
 
-      <label for="filter-searchBy">Search By</label>
+      <!-- Search By</h3> -->
+      <div class="filter-input-container">
 
-      <div class="filter-input-element">
+        <label for="filter-searchBy">Search By...</label>
 
-        <select id="filter-search" class="filter-input" name="filter-search">
+        <div class="filter-input-element">
 
-          <option selected value="">Any</option>
-          <option>Name</option>
-          <option>Genre</option>
-          <option>Creator</option>
-          <option>Availbility</option>
+          <select id="filter-search" class="filter-input" name="filterBy">
 
-        </select>
+            <option selected value="name" name="byName">Name</option>
+            <option value="genre" name="byGenre">Genre</option>
+            <option value="creator" name="byCreator">Creator First Name</option>
+
+          </select>
+
+        </div>
 
       </div>
 
-    </div>
+    </form>
 
   </div>
 
