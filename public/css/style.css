@@ -75,6 +75,14 @@ nav a {
 }
 
 
+/* Lists */
+.pretty-lists ul {
+	list-style-type: circle;
+}
+
+
+
+
 /* Forms */
 .pretty-forms {
 	background-color: #f8f8f8;

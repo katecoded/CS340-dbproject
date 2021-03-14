@@ -468,9 +468,7 @@ function addFavoriteCreators(customerList, creatorList) {
 	return customerList;
 }
 
-
-//edit customers page
-app.get('/add_rm_update_customers', function(req, res) {
+function renderAddRmCustomer(req, res) {
 
 	var customerList = {};
 
@@ -521,6 +519,13 @@ app.get('/add_rm_update_customers', function(req, res) {
 			});
 		});
 	});
+}
+
+
+//edit customers page
+app.get('/add_rm_update_customers', function(req, res) {
+
+	renderAddRmCustomer(res, res);
 });
 
 app.post('/add_rm_update_customers', function(req, res) {
@@ -539,12 +544,12 @@ app.post('/add_rm_update_customers', function(req, res) {
                 res.end();
             }
 
-            res.render('add_rm_update_customers');
+            renderAddRmCustomer(res, res);
         });
     }
 
 	//delete customer
-    if(req.body.add == "deleteCustomer") {
+    else if(req.body.add == "deleteCustomer") {
 
     	var query = "DELETE FROM Customers WHERE first_name = ? AND last_name = ?";
    	 	var inserts = [req.body.first_name, req.body.last_name];
@@ -555,7 +560,7 @@ app.post('/add_rm_update_customers', function(req, res) {
 	            res.end();
 	        }
 
-	        res.render('add_rm_update_customers');
+	        renderAddRmCustomer(res, res);
 	    });
 	}
 
@@ -571,37 +576,37 @@ app.post('/add_rm_update_customers', function(req, res) {
 	            res.end();
 	        }
 
-	        res.render('add_rm_update_customers');
+	        renderAddRmCustomer(res, res);
 	    });
 	}
 
 	//update customer favorite creator
-		if(req.body.add == "updateCustomerFavoriteCreator") {
-			//if the last name is an empty string, replace with NULL
+	if(req.body.add == "updateCustomerFavoriteCreator") {
+		//if the last name is an empty string, replace with NULL
 
-			if(req.body.creator_lname == '') {
-				var lname = null;
-			} else {
-				var lname = req.body.creator_lname;
-			}
+		if(req.body.creator_lname == '') {
+			var lname = null;
+		} else {
+			var lname = req.body.creator_lname;
+		}
 
-			//query if lname is NULL
-			if(lname == null) {
-				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL) WHERE first_name = ? AND last_name = ?";
-				var inserts = [req.body.creator_fname, req.body.first_name, req.body.last_name]
-			} else { //query if lname is not null
-				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?) WHERE first_name = ? AND last_name = ?";
-				var inserts = [req.body.creator_fname, lname, req.body.first_name, req.body.last_name];
-			}
+		//query if lname is NULL
+		if(lname == null) {
+			var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL) WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_fname, req.body.first_name, req.body.last_name]
+		} else { //query if lname is not null
+			var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?) WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_fname, lname, req.body.first_name, req.body.last_name];
+		}
 
-			mysql.pool.query(query, inserts, function(error, results, fields) {
-					if(error) {
-							res.write(JSON.stringify(error));
-							res.end();
-					}
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+				if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+				}
 
-					res.render('add_rm_update_customers');
-			});
+				renderAddRmCustomer(res, res);
+		});
 	}
 
 	//update customer favorite genre
@@ -616,12 +621,12 @@ app.post('/add_rm_update_customers', function(req, res) {
 						res.end();
 				}
 
-				res.render('add_rm_update_customers');
+				renderAddRmCustomer(res, res);
 		});
 	}
 
 	 //delete customer favorite creator
-	 if(req.body.add == "deleteCustomerFavoriteCreator") {
+	if(req.body.add == "deleteCustomerFavoriteCreator") {
 
  		var query = "UPDATE Customers SET favorite_creator = NULL WHERE first_name = ? AND last_name = ?";
  		var inserts = [req.body.first_name, req.body.last_name];
@@ -632,27 +637,27 @@ app.post('/add_rm_update_customers', function(req, res) {
  						res.end();
  				}
 
- 				res.render('add_rm_update_customers');
+ 				renderAddRmCustomer(res, res);
  		});
  	}
 
 	//delete customer favorite creator
 	if(req.body.add == "deleteCustomerFavoriteGenre") {
 
-	 var query = "UPDATE Customers SET favorite_genre = NULL WHERE first_name = ? AND last_name = ?";
-	 var inserts = [req.body.first_name, req.body.last_name];
+		var query = "UPDATE Customers SET favorite_genre = NULL WHERE first_name = ? AND last_name = ?";
+		var inserts = [req.body.first_name, req.body.last_name];
 
-	 mysql.pool.query(query, inserts, function(error, results, fields) {
-			 if(error) {
-					 res.write(JSON.stringify(error));
-					 res.end();
-			 }
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
 
-			 res.render('add_rm_update_customers');
-	 });
- }
+			renderAddRmCustomer(res, res);
+		});
+	}
 
- });
+});
 
 
 //view all creators page
