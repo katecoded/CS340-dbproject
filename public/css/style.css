@@ -75,6 +75,14 @@ nav a {
 }
 
 
+/* Lists */
+.pretty-lists ul {
+	list-style-type: circle;
+}
+
+
+
+
 /* Forms */
 .pretty-forms {
 	background-color: #f8f8f8;
@@ -94,7 +102,7 @@ nav a {
 	margin-bottom: 5px;
 }
 
-.pretty-forms input[type=text], .pretty-forms input[type=number], .pretty-forms input[type=submit] {
+.pretty-forms input[type=text], .pretty-forms input[type=number], .pretty-forms input[type=submit], .pretty-forms input[type=email] {
 	/*display: block;*/
 	margin-bottom: 10px;
 	width: 96%;

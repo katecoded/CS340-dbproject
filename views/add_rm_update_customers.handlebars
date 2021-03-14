@@ -11,188 +11,264 @@ add_rm_update_customers.handlebars
 -->
 
 
-<main>
+<main id="grid-container">
+
+	
+	<div id="left-col">
 
 
-	<h3>Add Customer</h3>
+		<div class="pretty-forms">
 
-	<!-- Add Customer -->
-	<form action="/add_rm_update_customers" method="post">
+			<h3>Add Customer</h3>
 
-		<label>First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+			<!-- Add Customer -->
+			<form action="/add_rm_update_customers" method="post">
 
-		<label>Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
+				<label for="first_name">First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
 
-		<label>Email:
-			<input type="email" name="email">
-		</label>
-		<br/>
+				<label for="last_name">Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
 
-		<label>Phone Number:
-			<input type="number" name="phone">
-		</label>
-		<br/>
+				<label for="email">Email:</label>
+				<input type="email" name="email">
+				<br/>
 
-		<input type="submit" value="add">
-		<input id="add" name="add" type="hidden" value="addCustomer">
+				<label for="phone">Phone Number:</label>
+				<input type="number" name="phone">
+				<br/>
 
-	</form>
-	<br/>
+				<input type="submit" value="Add">
+				<input id="add" name="add" type="hidden" value="addCustomer">
 
-
-	<h3>Delete Customer</h3>
-
-	<!-- Delete Customer -->
-	<form action="/add_rm_update_customers" method="post">
-
-		<label>First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
-
-		<label>Last Name:
-			<input type="text" name="last_name">
-		</label>
-		</br>
-
-		<input type="submit" value="Delete">
-		<input id="add" name="add" type="hidden" value="deleteCustomer">
-
-	</form>
-	<br/>
+			</form>
+			
+		</div>
 
 
-	<h3>Update Customer Debt</h3>
+		<div class="pretty-forms">
 
-	<!-- Update Customer Debt -->
-	<form action="/add_rm_update_customers" method="post">
+			<h3>Delete Customer</h3>
 
-		<label>First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+			<!-- Delete Customer -->
+			<form action="/add_rm_update_customers" method="post">
 
-		<label>Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
+				<label for="first_name">First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
 
-		<label>Debt:
-			<input type="number" name="debt">
-		</label>
-		<br/>
+				<label for="last_name">Last Name:</label>
+				<input type="text" name="last_name">
+				</br>
 
-		<input type="submit" value="Update">
-		<input id="add" name="add" type="hidden" value="updateCustomerDebt">
+				<input type="submit" value="Delete">
+				<input id="add" name="add" type="hidden" value="deleteCustomer">
 
-	</form>
-	<br/>
+			</form>
+
+		</div>
 
 
-	<h3>Update Customer Favorite Creator</h3>
+		<div class="pretty-forms">
 
-	<!-- Update Customer Favorite Creator-->
-	<form action="/add_rm_update_customers" method="post">
+			<h3>Update Customer Debt</h3>
 
-		<label>Customer First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+			<!-- Update Customer Debt -->
+			<form action="/add_rm_update_customers" method="post">
 
-		<label>Customer Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
+				<label for="first_name">First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
 
-		<label>Creator First Name:
-			<input type="text" name="creator_fname">
-		</label>
-		<br/>
+				<label for="last_name">Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
 
-		<label>Creator Last Name:
-			<input type="text" name="creator_lname">
-		</label>
-		<br/>
+				<label for="debt">Debt:</label>
+				<input type="number" name="debt">
+				<br/>
 
-		<input type="submit" value="Update">
-		<input id="add" name="add" type="hidden" value="updateCustomerFavoriteCreator">
+				<input type="submit" value="Update">
+				<input id="add" name="add" type="hidden" value="updateCustomerDebt">
 
-	</form>
-	<br/>
+			</form>
+			
+		</div>
 
-	<h3>Update Customer Favorite Genre</h3>
 
-	<!-- Update Customer Favorite Genre -->
-	<form action="/add_rm_update_customers" method="post">
+		<div class="pretty-forms">
 
-		<label>Customer First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+			<h3>Update Customer Favorite Creator</h3>
 
-		<label>Customer Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
+			<!-- Update Customer Favorite Creator-->
+			<form action="/add_rm_update_customers" method="post">
 
-		<label>Genre:
-			<input type="text" name="genre_name">
-		</label>
-		<br/>
+				<label for="first_name">Customer First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
 
-		<input type="submit" value="Update">
-		<input id="add" name="add" type="hidden" value="updateCustomerFavoriteGenre">
+				<label for="last_name">Customer Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
 
-	</form>
-	<br/>
+				<label for="creator_fname">Creator First Name:</label>
+				<input type="text" name="creator_fname">
+				<br/>
 
-	<h3>Delete Customer Favorite Creator</h3>
+				<label for="creator_lname">Creator Last Name:
+					<input type="text" name="creator_lname">
+				<br/>
 
-	<!-- Delete Customer Favorite Creator-->
-	<form action="/add_rm_update_customers" method="post">
+				<input type="submit" value="Update">
+				<input id="add" name="add" type="hidden" value="updateCustomerFavoriteCreator">
 
-		<label>Customer First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+			</form>
+		
+		</div>
 
-		<label>Customer Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
 
-		<input type="submit" value="Update">
-		<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteCreator">
+		<div class="pretty-forms">
 
-	</form>
-	<br/>
+			<h3>Update Customer Favorite Genre</h3>
 
-	<h3>Delete Customer Favorite Genre</h3>
+			<!-- Update Customer Favorite Genre -->
+			<form action="/add_rm_update_customers" method="post">
 
-	<!-- Delete Customer Favorite Creator-->
-	<form action="/add_rm_update_customers" method="post">
+				<label for="first_name">Customer First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
 
-		<label>Customer First Name:
-			<input type="text" name="first_name">
-		</label>
-		<br/>
+				<label for="last_name">Customer Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
 
-		<label>Customer Last Name:
-			<input type="text" name="last_name">
-		</label>
-		<br/>
+				<label for="genre_name">Genre:</label>
+				<input type="text" name="genre_name">
+				<br/>
 
-		<input type="submit" value="Update">
-		<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteGenre">
+				<input type="submit" value="Update">
+				<input id="add" name="add" type="hidden" value="updateCustomerFavoriteGenre">
 
-	</form>
-	<br/>
+			</form>
+
+		</div>
+
+
+		<div class="pretty-forms">
+
+			<h3>Delete Customer Favorite Creator</h3>
+
+			<!-- Delete Customer Favorite Creator-->
+			<form action="/add_rm_update_customers" method="post">
+
+				<label for="first_name">Customer First Name:</label>
+				<input type="text" name="first_name">
+				<br/>
+
+				<label for="last_name">Customer Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
+
+				<input type="submit" value="Update">
+
+				<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteCreator">
+
+			</form>
+
+		</div>
+
+
+		<div class="pretty-forms">
+
+			<h3>Delete Customer Favorite Genre</h3>
+
+			<!-- Delete Customer Favorite Creator-->
+			<form action="/add_rm_update_customers" method="post">
+
+				<label for="first_name">Customer First Name:
+				<input type="text" name="first_name">
+				<br/>
+
+				<label for="last_name">Customer Last Name:</label>
+				<input type="text" name="last_name">
+				<br/>
+
+				<input type="submit" value="Update">
+				<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteGenre">
+
+			</form>
+
+		</div>
+
+
+	</div>
+
+
+	<div id="right-col">
+
+		<h3>All Customers</h3>
+
+		{{#each customer}}
+  		<table class="pretty-tables">
+
+	    	<tr>
+	      		<th colspan="2">
+	        		{{this.full_name}}
+	      		</th>
+	    	</tr>
+
+	    	<tr>
+	      		<td>
+	        		Email
+	      		</td>
+	      		<td>
+	        		{{this.email}}
+	      		</td>
+	    	</tr>
+
+	    	<tr> 
+	      		<td>
+	        		Phone
+	      		</td>
+	      		<td>
+	        		{{this.phone}}
+	      		</td>
+	   		</tr>
+
+	    	<tr>
+	      		<td>
+	        		Debt
+	      		</td>
+	      		<td>
+	        		{{this.debt}}
+	      		</td>
+	    	</tr>
+
+	    	<tr>
+	      		<td>
+	        		Favorite Creator
+	      		</td>
+	      		<td>
+	        		{{this.favorite_creator}}
+	      		</td>
+	    	</tr>
+
+	    	<tr>
+	    		<td>
+	    			Favorite Genre
+	    		</td>
+	    		<td>
+	    			{{this.favorite_genre}}
+	    		</td>
+	    	</tr>
+
+ 		</table>
+  		{{/each}}
+
+
+	</div>
 
 
 </main>

@@ -407,9 +407,125 @@ app.post('/add_rm_games', function(req, res) {
 });
 
 
+function addFavoriteGenres(customerList, genreList) {
+	//Takes a list of customers and genres, and changes the genre ids to the name
+	
+	//iterate through the list of customers
+	for(var i = 0; i < customerList.customer.length; i++) {
+
+		//if this customer has a favorite genre
+		if(customerList.customer[i].favorite_genre != null) {
+
+			//iterate through the list of genres
+			for(var j = 0; j < genreList.length; j++) {
+
+				//if the genre_ID is the same as the favorite genre
+				if(genreList[j].genre_ID == customerList.customer[i].favorite_genre) {
+
+					//set the favorite genre to the name of the genre instead of the id
+					customerList.customer[i].favorite_genre = genreList[j].genre_name;
+				}
+			}
+		}
+	}
+
+	//return the customer list, now with genre names
+	return customerList;
+}
+
+
+function addFavoriteCreators(customerList, creatorList) {
+	//Takes a list of customers and creators, and changes the creator ids to the name
+	
+	//iterate through the list of customers
+	for(var i = 0; i < customerList.customer.length; i++) {
+
+		//if this customer has a favorite creator
+		if(customerList.customer[i].favorite_creator != null) {
+
+			//iterate through the list of creators
+			for(var j = 0; j < creatorList.length; j++) {
+
+				//if the creator_ID is the same as the favorite creator
+				if(creatorList[j].creator_ID == customerList.customer[i].favorite_creator) {
+
+					//if the creator has a last name
+					if(creatorList[j].last_name != null) {
+						//add first and last name instead of id
+						customerList.customer[i].favorite_creator = creatorList[j].first_name + " " + creatorList[j].last_name;
+					}
+					//else if there is no last name
+					else{
+						//add first name instead of id
+						customerList.customer[i].favorite_creator = creatorList[j].first_name;
+					}
+				}
+			}
+		}
+	}
+
+	//return the customer list, now with creator names
+	return customerList;
+}
+
+function renderAddRmCustomer(req, res) {
+
+	var customerList = {};
+
+	//first, get all of the customer information
+	var query = "SELECT * FROM Customers ORDER BY last_name ASC";
+
+	mysql.pool.query(query, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		customerList.customer = results;
+
+		//concatenate the first and last name together
+		for(var i = 0; i < customerList.customer.length; i++) {
+
+			customerList.customer[i].full_name = customerList.customer[i].first_name + " " + customerList.customer[i].last_name;
+		}
+
+		//next, get all of the genres
+		var query2 = "SELECT * FROM Genres";
+
+		mysql.pool.query(query2, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			//change the customers' favorite genres to be the genre_name instead of the id
+			customerList = addFavoriteGenres(customerList, results);
+
+
+			//next, get all of the creators
+			var query3 = "SELECT * FROM Creators";
+
+			mysql.pool.query(query3, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+
+				//change the customers' favorite creators to be the first_name (and last_name) instead of the id
+				customerList = addFavoriteCreators(customerList, results);
+
+				console.log(customerList);
+				res.render('add_rm_update_customers', customerList);
+			});
+		});
+	});
+}
+
+
 //edit customers page
 app.get('/add_rm_update_customers', function(req, res) {
-	res.render('add_rm_update_customers');
+
+	renderAddRmCustomer(res, res);
 });
 
 app.post('/add_rm_update_customers', function(req, res) {
@@ -428,12 +544,12 @@ app.post('/add_rm_update_customers', function(req, res) {
                 res.end();
             }
 
-            res.render('add_rm_update_customers');
+            renderAddRmCustomer(res, res);
         });
     }
 
 	//delete customer
-    if(req.body.add == "deleteCustomer") {
+    else if(req.body.add == "deleteCustomer") {
 
     	var query = "DELETE FROM Customers WHERE first_name = ? AND last_name = ?";
    	 	var inserts = [req.body.first_name, req.body.last_name];
@@ -444,7 +560,7 @@ app.post('/add_rm_update_customers', function(req, res) {
 	            res.end();
 	        }
 
-	        res.render('add_rm_update_customers');
+	        renderAddRmCustomer(res, res);
 	    });
 	}
 
@@ -460,37 +576,37 @@ app.post('/add_rm_update_customers', function(req, res) {
 	            res.end();
 	        }
 
-	        res.render('add_rm_update_customers');
+	        renderAddRmCustomer(res, res);
 	    });
 	}
 
 	//update customer favorite creator
-		if(req.body.add == "updateCustomerFavoriteCreator") {
-			//if the last name is an empty string, replace with NULL
+	if(req.body.add == "updateCustomerFavoriteCreator") {
+		//if the last name is an empty string, replace with NULL
 
-			if(req.body.creator_lname == '') {
-				var lname = null;
-			} else {
-				var lname = req.body.creator_lname;
-			}
+		if(req.body.creator_lname == '') {
+			var lname = null;
+		} else {
+			var lname = req.body.creator_lname;
+		}
 
-			//query if lname is NULL
-			if(lname == null) {
-				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL) WHERE first_name = ? AND last_name = ?";
-				var inserts = [req.body.creator_fname, req.body.first_name, req.body.last_name]
-			} else { //query if lname is not null
-				var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?) WHERE first_name = ? AND last_name = ?";
-				var inserts = [req.body.creator_fname, lname, req.body.first_name, req.body.last_name];
-			}
+		//query if lname is NULL
+		if(lname == null) {
+			var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name IS NULL) WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_fname, req.body.first_name, req.body.last_name]
+		} else { //query if lname is not null
+			var query = "UPDATE Customers SET favorite_creator = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?) WHERE first_name = ? AND last_name = ?";
+			var inserts = [req.body.creator_fname, lname, req.body.first_name, req.body.last_name];
+		}
 
-			mysql.pool.query(query, inserts, function(error, results, fields) {
-					if(error) {
-							res.write(JSON.stringify(error));
-							res.end();
-					}
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+				if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+				}
 
-					res.render('add_rm_update_customers');
-			});
+				renderAddRmCustomer(res, res);
+		});
 	}
 
 	//update customer favorite genre
@@ -505,12 +621,12 @@ app.post('/add_rm_update_customers', function(req, res) {
 						res.end();
 				}
 
-				res.render('add_rm_update_customers');
+				renderAddRmCustomer(res, res);
 		});
 	}
 
 	 //delete customer favorite creator
-	 if(req.body.add == "deleteCustomerFavoriteCreator") {
+	if(req.body.add == "deleteCustomerFavoriteCreator") {
 
  		var query = "UPDATE Customers SET favorite_creator = NULL WHERE first_name = ? AND last_name = ?";
  		var inserts = [req.body.first_name, req.body.last_name];
@@ -521,27 +637,28 @@ app.post('/add_rm_update_customers', function(req, res) {
  						res.end();
  				}
 
- 				res.render('add_rm_update_customers');
+ 				renderAddRmCustomer(res, res);
  		});
  	}
 
 	//delete customer favorite creator
 	if(req.body.add == "deleteCustomerFavoriteGenre") {
 
-	 var query = "UPDATE Customers SET favorite_genre = NULL WHERE first_name = ? AND last_name = ?";
-	 var inserts = [req.body.first_name, req.body.last_name];
+		var query = "UPDATE Customers SET favorite_genre = NULL WHERE first_name = ? AND last_name = ?";
+		var inserts = [req.body.first_name, req.body.last_name];
 
-	 mysql.pool.query(query, inserts, function(error, results, fields) {
-			 if(error) {
-					 res.write(JSON.stringify(error));
-					 res.end();
-			 }
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
 
-			 res.render('add_rm_update_customers');
-	 });
- }
+			renderAddRmCustomer(res, res);
+		});
+	}
 
- });
+});
+
 
 //view all creators page
 app.get('/creators', function(req, res) {
@@ -697,7 +814,8 @@ app.get('/boardgame', function(req, res) {
 //rent-a-game 
 app.get('/rent-a-game', function(req, res) {
 	res.render('return');
-})
+});
+
 
 
 function addGames(rentalList, gameList) {
@@ -755,6 +873,7 @@ app.get('/customer-rentals', function(req, res) {
 		});
 	});
 })
+
 
 
 //404 error
