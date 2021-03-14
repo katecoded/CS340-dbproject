@@ -13,18 +13,23 @@ creators.handlebars
 <main>
 
 	
-	<h3 id="list-title">All Available Creators</h3>
+	<div class="pretty-list-wrapper">
 
-	<ul class="pretty-lists">
 
-		{{#each creators}}
+		<h3 class="list-titles">All Available Creators</h3>
 
-		<li>{{this.first_name}} {{this.last_name}}</li>
 
-		{{/each}}
+		<ul class="pretty-lists">
 
-	</ul>
-	<br/>
+			{{#each creators}}
+
+			<li>{{this.first_name}} {{this.last_name}}</li>
+
+			{{/each}}
+
+		</ul>
+
+	</div>
 
 
 </main>

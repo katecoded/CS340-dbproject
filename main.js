@@ -759,28 +759,27 @@ app.get('/customer', function(req, res) {
 
 		customerList.customer = results;
 
-		//get the favorite creator for this customer
-		var subquery = "SELECT first_name, last_name FROM Creators WHERE creator_ID = ?";
+		//get all of the creators
+		var subquery = "SELECT * FROM Creators";
 		//console.log(customerList.customer[0].favorite_creator);
-		var subinserts = [customerList.customer[0].favorite_creator];
 
-		mysql.pool.query(subquery, subinserts, function(error, results, fields) {
+		mysql.pool.query(subquery, function(error, results, fields) {
 			if(error) {
 				res.write(JSON.stringify(error));
 				res.end();
 			}
-			customerList.creator = results;
+			//add favorite creator
+			customerList = addFavoriteCreators(customerList, results);
 
-			//get the favorite genre for this customer
-			var subsubquery = "SELECT genre_name FROM Genres WHERE genre_ID = ?";
-			var subsubinserts = [customerList.customer[0].favorite_genre];
+			//get all of the genres
+			var subsubquery = "SELECT * FROM Genres";
 
-			mysql.pool.query(subsubquery, subsubinserts, function(error, results, fields) {
+			mysql.pool.query(subsubquery, function(error, results, fields) {
 				if(error) {
 					res.write(JSON.stringify(error));
 					res.end();
 				}
-				customerList.genre = results;
+				customerList = addFavoriteGenres(customerList, results);
 				console.log(customerList);
 
 				res.render('customer', customerList);
@@ -789,6 +788,48 @@ app.get('/customer', function(req, res) {
 	});
 });
 
+
+function renderSearchedGames(req, res, gameList) {
+	//Takes a list of games that were searched and adds the genres and creators
+	//to the JSON file before rendering the page
+
+	//for every game in the list of games, add a Genres string and a Creators string
+	for(var i = 0; i < gameList.game.length; i++) {
+		gameList.game[i].genres = "";
+		gameList.game[i].creators = "";
+	}
+
+
+	//next, get all of the game genres attached to board_games (with the names)
+	var query2 = "SELECT Game_Genres.genre_ID, Game_Genres.board_game_ID, Genres.genre_name FROM Game_Genres INNER JOIN Genres ON Game_Genres.genre_ID = Genres.genre_ID";
+
+	mysql.pool.query(query2, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+
+		gameList = addGenres(gameList, results);
+		//console.log(gameList);
+
+
+		//next, get all of the creators attached to board games (with the names)
+		var query3 = "SELECT Game_Creators.creator_ID, Game_Creators.board_game_ID, Creators.first_name, Creators.last_name FROM Game_Creators INNER JOIN Creators ON Game_Creators.creator_ID = Creators.creator_ID"
+
+		mysql.pool.query(query3, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			gameList = addCreators(gameList, results);
+			//console.log(gameList);
+
+			res.render('boardgame', gameList);
+		});
+	});
+
+}
 
 //search boardgames page
 app.get('/boardgame', function(req, res) {
@@ -810,7 +851,7 @@ app.get('/boardgame', function(req, res) {
 			gameList.game = results;
 			console.log(gameList);
 
-			res.render('boardgame', gameList);
+			renderSearchedGames(req, res, gameList);
 		});
 
 	}
@@ -829,7 +870,7 @@ app.get('/boardgame', function(req, res) {
 			gameList.game = results;
 			console.log(gameList);
 
-			res.render('boardgame', gameList);
+			renderSearchedGames(req, res, gameList);
 		});
 	}
 
@@ -846,7 +887,7 @@ app.get('/boardgame', function(req, res) {
 			gameList.game = results;
 			console.log(gameList);
 
-			res.render('boardgame', gameList);
+			renderSearchedGames(req, res, gameList);
 		});
 	}
 
