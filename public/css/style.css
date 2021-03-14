@@ -76,10 +76,28 @@ nav a {
 
 
 /* Lists */
-.pretty-lists ul {
-	list-style-type: circle;
+.pretty-list-wrapper {
+	margin: 0px auto;
+	max-width: 380px;
+	min-width: 320px;
+	background-color: #f8f8f8;
+	padding: 1px 15px;
+	border-radius: 5px;
 }
 
+.pretty-lists {
+	list-style-type: square;
+}
+
+.list-titles {
+	text-align: center;
+	margin-bottom: 0px;
+}
+
+.pretty-lists li {
+	margin-left: 45px;
+	margin-bottom: 10px;
+}
 
 
 
@@ -106,6 +124,12 @@ nav a {
 	/*display: block;*/
 	margin-bottom: 10px;
 	width: 96%;
+	padding: 7px;
+}
+
+.pretty-forms select {
+	margin-bottom: 10px;
+	width: 40%;
 	padding: 7px;
 }
 
@@ -147,6 +171,20 @@ nav a {
 
 .pretty-tables tr td:first-of-type {
 	font-weight: 500;
+}
+
+.pretty-tables input[type=submit] {
+	text-align: center;
+	width: 45%;
+	padding: 5px;
+	margin: 0px;
+	margin-left: 28%;
+	font-weight: 500;
+	font-size: 0.8em;
+}
+
+.pretty-tables input[type=submit]:hover {
+	background-color: #e8e8e8;
 }
 
 

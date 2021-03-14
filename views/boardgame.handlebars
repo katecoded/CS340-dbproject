@@ -15,7 +15,7 @@ boardgame.handlebars
 
   
   {{#each game}}
-  <table>
+  <table class="pretty-tables">
 
     <tr>
       <th colspan="2">
@@ -56,6 +56,24 @@ boardgame.handlebars
       </td>
       <td>
         {{this.year_created}}
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        Genres
+      </td>
+      <td>
+        {{this.genres}}
+      </td>
+    </tr>
+    
+    <tr>
+      <td>
+        Creators
+      </td>
+      <td>
+        {{this.creators}}
       </td>
     </tr>
 

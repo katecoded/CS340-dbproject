@@ -12,19 +12,24 @@ genres.handlebars
 
 
 <main>
+	
 
-	<h3>All Available Genres</h3>
+	<div class="pretty-list-wrapper">
 
-	<ul>
 
-		{{#each genres}}
+		<h3 class="list-titles">All Available Genres</h3>
 
-		<li>{{this.genre_name}}</li>
+		<ul class="pretty-lists">
+
+			{{#each genres}}
+
+			<li>{{this.genre_name}}</li>
+			
+			{{/each}}
+
+		</ul>
 		
-		{{/each}}
-
-	</ul>
-	<br/>
+	</div>
 
 
 </main>
