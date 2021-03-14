@@ -1,0 +1,81 @@
+<!--
+Otherworldly Games
+
+A project by Group 28: Fellowship of Databases
+
+Team Members:
+Nancy Nguyen
+Katelyn Lindsey
+
+rental.handlebars
+-->
+
+
+<main>
+
+	{{#each game}}
+		<table class="pretty-tables">
+
+			<tr>
+					<th colspan="2">
+						{{this.game_name}}
+					</th>
+			</tr>
+
+			<tr>
+					<td>
+						Minimum # Of Players
+					</td>
+					<td>
+						{{this.min_num_player}}
+					</td>
+			</tr>
+
+			<tr>
+					<td>
+						Maximum # Of Players
+					</td>
+					<td>
+						{{this.max_num_player}}
+					</td>
+			</tr>
+
+			<tr>
+					<td>
+						Rating
+					</td>
+					<td>
+						{{this.rating}}/10
+					</td>
+			</tr>
+
+			<tr>
+					<td>
+						Year Created
+					</td>
+					<td>
+						{{this.year_created}}
+					</td>
+			</tr>
+
+			<tr>
+				<td>
+					Genres
+				</td>
+				<td>
+					{{this.genres}}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Creators
+				</td>
+				<td>
+					{{this.creators}}
+				</td>
+			</tr>
+		</table>
+	{{/each}}
+
+
+</main>
