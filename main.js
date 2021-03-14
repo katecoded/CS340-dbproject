@@ -588,6 +588,7 @@ app.get('/customer', function(req, res) {
 
 	var customerList = {};
 
+	//search for a customer that has a name like the one submitted
 	var query = "SELECT customer_ID, first_name, last_name, email, phone, debt, favorite_creator, favorite_genre FROM Customers WHERE first_name LIKE ? AND last_name LIKE ?";
 	var inserts = ["%" + req.query.fname + "%", "%" + req.query.lname + "%"];
 
@@ -599,46 +600,31 @@ app.get('/customer', function(req, res) {
 
 		customerList.customer = results;
 
+		//get the favorite creator for this customer
 		var subquery = "SELECT first_name, last_name FROM Creators WHERE creator_ID = ?";
-		console.log(customerList.customer[0].favorite_creator);
+		//console.log(customerList.customer[0].favorite_creator);
 		var subinserts = [customerList.customer[0].favorite_creator];
+
 		mysql.pool.query(subquery, subinserts, function(error, results, fields) {
 			if(error) {
 				res.write(JSON.stringify(error));
 				res.end();
 			}
 			customerList.creator = results;
+
+			//get the favorite genre for this customer
 			var subsubquery = "SELECT genre_name FROM Genres WHERE genre_ID = ?";
 			var subsubinserts = [customerList.customer[0].favorite_genre];
+
 			mysql.pool.query(subsubquery, subsubinserts, function(error, results, fields) {
 				if(error) {
 					res.write(JSON.stringify(error));
 					res.end();
 				}
 				customerList.genre = results;
+				console.log(customerList);
 
-				var subquery3 = "SELECT * FROM Rentals WHERE customer_ID = ? AND returned = false";
-				var subinserts3 = [customerList.customer[0].customer_ID];
-				console.log(customerList.customer[0].customer_ID);
-				mysql.pool.query(subquery3, subinserts3, function(error, results, fields) {
-					if(error) {
-						res.write(JSON.stringify(error));
-						res.end();
-					}
-					customerList.rental = results;
-
-					var subquery4 = "SELECT * FROM Board_Games WHERE board_game_id = ?";
-					var subinserts4 = customerList.rental[0].rental_ID;
-					mysql.pool.query(subquery4, subinserts4, function(error, results, fields) {
-						if(error) {
-							res.write(JSON.stringify(error));
-							res.end();
-						}
-						customerList.rental = results;
-						console.log(customerList.rental);
-						res.render('customer', customerList);
-					});
-				});
+				res.render('customer', customerList);
 			});
 		});
 	});
@@ -708,15 +694,66 @@ app.get('/boardgame', function(req, res) {
 });
 
 
-//return game page
-app.get('/return', function(req, res) {
+//rent-a-game 
+app.get('/rent-a-game', function(req, res) {
 	res.render('return');
 })
 
 
-//rent game page
-app.get('/rental', function(req, res) {
-	res.render('rental');
+function addGames(rentalList, gameList) {
+
+	rentalList.game = {};
+
+	//iterate through the list of rentals
+	for(var i = 0; i < rentalList.rental.length; i++) {
+
+		//iterate through the list of games
+		for(var j = 0; j < gameList.length; j++) {
+
+			//if the board_game_ids are the same, add it to rentalList 
+			if(rentalList.rental[i].board_game_ID == gameList[j].board_game_ID) {
+				rentalList.game[i] = gameList[j];
+			}
+		}
+
+	}
+
+	//return rentalList, now with games
+	return rentalList;
+}
+
+//customer rentals page (where games are returned)
+app.get('/customer-rentals', function(req, res) {
+
+	var rentalList = {};
+
+	//get all of the rentals for the specified customer
+	var query = "SELECT * FROM Rentals WHERE customer_ID = ? AND returned = 0";
+	var inserts = [req.query.customer_ID];
+	console.log(req.query.customer_ID);
+
+	mysql.pool.query(query, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+		rentalList.rental = results;
+
+		//get all of the boardgames
+		var subquery = "SELECT * FROM Board_Games";
+
+		mysql.pool.query(subquery, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			addGames(rentalList, results);
+
+			console.log(rentalList);
+			res.render('customer-rentals', rentalList);
+		});
+	});
 })
 
 
