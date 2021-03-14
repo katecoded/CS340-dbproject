@@ -334,6 +334,48 @@ app.post('/add_rm_games', function(req, res) {
 
 		});
 	}
+	//Delete existing genre in game
+	else if (req.body.add == "deleteGenre"){
+		var query = "DELETE FROM Game_Genres WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?) AND genre_ID = (SELECT genre_ID FROM Genres WHERE genre_name = ?)";
+		var inserts = [req.body.game_name, req.body.genre_name];
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			renderAddRmGames(req, res);
+		});
+	}
+
+	else if(req.body.add == "deleteCreator") {
+
+		//if the last name is an empty string, replace with NULL
+		if(req.body.creator_lname == '') {
+			var lname = null;
+		} else {
+			var lname = req.body.creator_lname;
+		}
+
+		//first, do a query to check if the creator's first and last name are in the database
+		//query if lname is null
+		if(lname == null) {
+			var query = "DELETE FROM Game_Creators WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?) AND creator_ID = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name is NULL)";
+			var inserts = [req.body.game_name, req.body.creator_fname];
+		} else { //query if lname is not null
+			var query = "DELETE FROM Game_Creators WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?) AND creator_ID = (SELECT creator_ID FROM Creators WHERE first_name = ? AND last_name = ?)";
+			var inserts = [req.body.game_name, req.body.creator_fname, lname];
+		}
+
+		mysql.pool.query(query, inserts, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			renderAddRmGames(req, res);
+		});
+	}
+
 
 	//updating creator age
 	else if(req.body.add == "updateAge") {
@@ -409,7 +451,7 @@ app.post('/add_rm_games', function(req, res) {
 
 function addFavoriteGenres(customerList, genreList) {
 	//Takes a list of customers and genres, and changes the genre ids to the name
-	
+
 	//iterate through the list of customers
 	for(var i = 0; i < customerList.customer.length; i++) {
 
@@ -436,7 +478,7 @@ function addFavoriteGenres(customerList, genreList) {
 
 function addFavoriteCreators(customerList, creatorList) {
 	//Takes a list of customers and creators, and changes the creator ids to the name
-	
+
 	//iterate through the list of customers
 	for(var i = 0; i < customerList.customer.length; i++) {
 
@@ -811,7 +853,7 @@ app.get('/boardgame', function(req, res) {
 });
 
 
-//rent-a-game 
+//rent-a-game
 app.get('/rent-a-game', function(req, res) {
 	res.render('return');
 });
@@ -828,7 +870,7 @@ function addGames(rentalList, gameList) {
 		//iterate through the list of games
 		for(var j = 0; j < gameList.length; j++) {
 
-			//if the board_game_ids are the same, add it to rentalList 
+			//if the board_game_ids are the same, add it to rentalList
 			if(rentalList.rental[i].board_game_ID == gameList[j].board_game_ID) {
 				rentalList.game[i] = gameList[j];
 			}

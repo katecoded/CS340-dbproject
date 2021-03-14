@@ -13,7 +13,7 @@ add_rm_games.handlebars
 
 <main id="grid-container">
 
-	
+
 	<div id="left-col">
 
 
@@ -100,7 +100,55 @@ add_rm_games.handlebars
 
 				<input type="submit" value="Add">
 			</form>
-		
+
+		</div>
+
+		<div class="pretty-forms">
+
+			<h3>Delete Creator to Existing Game</h3>
+
+			<!-- Delete Creators to Specific Games -->
+			<form action="/add_rm_games" method="post">
+
+				<label for="game_name">Game Name:</label>
+				<input type="text" name="game_name">
+				<br/>
+
+				<label for="creator_fname">Creator's First Name:</label>
+				<input type="text" name="creator_fname">
+				<br/>
+
+				<label for="creator_lname">Creator's Last Name (if applicable):</label>
+				<input type="text" name="creator_lname">
+				<br/>
+
+				<input id="add" name="add" type="hidden" value="deleteCreator">
+
+				<input type="submit" value="Delete">
+			</form>
+
+		</div>
+
+		<div class="pretty-forms">
+
+			<h3>Delete Genre to Existing Game</h3>
+
+			<!-- Delete Genre to Specific Games -->
+			<form action="/add_rm_games" method="post">
+
+				<label for="game_name">Game Name:</label>
+				<input type="text" name="game_name">
+				<br/>
+
+				<label for="genre_name">Genre Name:</label>
+				<input type="text" name="genre_name">
+				<br/>
+
+				<input id="add" name="add" type="hidden" value="deleteGenre">
+
+				<input type="submit" value="Delete">
+			</form>
+
 		</div>
 
 
@@ -148,7 +196,7 @@ add_rm_games.handlebars
 				<input type="submit" value="Delete">
 
 			</form>
-			
+
 		</div>
 
 
@@ -177,7 +225,7 @@ add_rm_games.handlebars
 	      		</td>
 	    	</tr>
 
-	    	<tr> 
+	    	<tr>
 	      		<td>
 	        		Maximum # Of Players
 	      		</td>
