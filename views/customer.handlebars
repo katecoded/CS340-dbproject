@@ -50,45 +50,38 @@ customer.handlebars
           {{this.debt}}
         </td>
       </tr>
-      {{/each}}
 
       <tr>
         <td>
           Favorite creator
         </td>
-        {{#each creator}}
         <td>
-          {{this.first_name}}
-          {{this.last_name}}
+          {{this.favorite_creator}}
         </td>
-        {{/each}}
       </tr>
 
       <tr>
         <td>
           Favorite genre
         </td>
-        {{#each genre}}
         <td>
-          {{this.genre_name}}
+          {{this.favorite_genre}}
         </td>
-        {{/each}}
       </tr>
 
       <tr>
         <td>
           See Rentals
         </td>
-        {{#each customer}}
         <td>
           <input id="customer_ID" name="customer_ID" type="hidden" value={{this.customer_ID}}>
           <input type="submit" value="Rentals">
         </td>
-        {{/each}}
 
       </tr>
 
     </table>
   </form>
+  {{/each}}
 
 </main>
