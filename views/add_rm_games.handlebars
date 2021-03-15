@@ -55,13 +55,19 @@ add_rm_games.handlebars
 
 		<div class="pretty-forms">
 
-			<h3>Add Genre to Existing Game</h3>
+			<h3 class="captioned-title">Add Genre to Existing Game</h3>
+			<span class="subtitle">(Add Existing or New Genre)</span>
 
 			<!-- Add Genres to Specific Games -->
 			<form action="/add_rm_games" method="post">
 
 				<label for="game_name">Game Name:</label>
-				<input type="text" name="game_name">
+				<input list="game_names" type="text" name="game_name">
+				<datalist id="game_names">
+			        {{#each game}}
+			        <option data-value={{this.game_name}}>{{this.game_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<label for="genre_name">Game Genre:</label>
@@ -79,13 +85,19 @@ add_rm_games.handlebars
 
 		<div class="pretty-forms">
 
-			<h3>Add Creator to Existing Game</h3>
+			<h3 class="captioned-title">Add Creator to Existing Game</h3>
+			<span class="subtitle">(Add Existing or New Creator)</span>
 
 			<!-- Add Creators to Specific Games -->
 			<form action="/add_rm_games" method="post">
 
 				<label for="game_name">Game Name:</label>
-				<input type="text" name="game_name">
+				<input list="game_names" type="text" name="game_name">
+				<datalist id="game_names">
+			        {{#each game}}
+			        <option data-value={{this.game_name}}>{{this.game_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<label for="creator_fname">Creator's First Name:</label>
@@ -107,11 +119,16 @@ add_rm_games.handlebars
 
 			<h3>Delete Creator from Existing Game</h3>
 
-			<!-- Delete Creators to Specific Games -->
+			<!-- Delete Creators from Specific Games -->
 			<form action="/add_rm_games" method="post">
 
 				<label for="game_name">Game Name:</label>
-				<input type="text" name="game_name">
+				<input list="game_names" type="text" name="game_name">
+				<datalist id="game_names">
+			        {{#each game}}
+			        <option data-value={{this.game_name}}>{{this.game_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<label for="creator_fname">Creator's First Name:</label>
@@ -133,11 +150,16 @@ add_rm_games.handlebars
 
 			<h3>Delete Genre from Existing Game</h3>
 
-			<!-- Delete Genre to Specific Games -->
+			<!-- Delete Genre from Specific Games -->
 			<form action="/add_rm_games" method="post">
 
 				<label for="game_name">Game Name:</label>
-				<input type="text" name="game_name">
+				<input list="game_names" type="text" name="game_name">
+				<datalist id="game_names">
+			        {{#each game}}
+			        <option data-value={{this.game_name}}>{{this.game_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<label for="genre_name">Genre Name:</label>
@@ -188,7 +210,12 @@ add_rm_games.handlebars
 			<form action="/add_rm_games" method="post">
 
 				<label for="game_name">Game Name:</label>
-				<input type="text" name="game_name">
+				<input list="game_names" type="text" name="game_name">
+				<datalist id="game_names">
+			        {{#each game}}
+			        <option data-value={{this.game_name}}>{{this.game_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<input id="add" name="add" type="hidden" value="deleteGame">

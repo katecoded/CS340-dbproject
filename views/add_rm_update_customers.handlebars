@@ -55,13 +55,14 @@ add_rm_update_customers.handlebars
 			<!-- Delete Customer -->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">First Name:</label>
-				<input type="text" name="first_name">
+				<label for="full_name">Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
-
-				<label for="last_name">Last Name:</label>
-				<input type="text" name="last_name">
-				</br>
 
 				<input type="submit" value="Delete">
 				<input id="add" name="add" type="hidden" value="deleteCustomer">
@@ -78,12 +79,13 @@ add_rm_update_customers.handlebars
 			<!-- Update Customer Debt -->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">First Name:</label>
-				<input type="text" name="first_name">
-				<br/>
-
-				<label for="last_name">Last Name:</label>
-				<input type="text" name="last_name">
+				<label for="full_name">Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 				<br/>
 
 				<label for="debt">Debt:</label>
@@ -100,18 +102,19 @@ add_rm_update_customers.handlebars
 
 		<div class="pretty-forms">
 
-			<h3>Update Customer Favorite Creator</h3>
+			<h3 class="captioned-title">Update Customer Favorite Creator</h3>
+			<span class="subtitle">(Existing Creators Only)</span>
 
 			<!-- Update Customer Favorite Creator-->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">Customer First Name:</label>
-				<input type="text" name="first_name">
-				<br/>
-
-				<label for="last_name">Customer Last Name:</label>
-				<input type="text" name="last_name">
-				<br/>
+				<label for="full_name">Customer Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 
 				<label for="creator_fname">Creator First Name:</label>
 				<input type="text" name="creator_fname">
@@ -131,18 +134,19 @@ add_rm_update_customers.handlebars
 
 		<div class="pretty-forms">
 
-			<h3>Update Customer Favorite Genre</h3>
+			<h3 class="captioned-title">Update Customer Favorite Genre</h3>
+			<span class="subtitle">(Existing Genres Only)</span>
 
 			<!-- Update Customer Favorite Genre -->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">Customer First Name:</label>
-				<input type="text" name="first_name">
-				<br/>
-
-				<label for="last_name">Customer Last Name:</label>
-				<input type="text" name="last_name">
-				<br/>
+				<label for="full_name">Customer Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 
 				<label for="genre_name">Genre:</label>
 				<input type="text" name="genre_name">
@@ -163,13 +167,13 @@ add_rm_update_customers.handlebars
 			<!-- Delete Customer Favorite Creator-->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">Customer First Name:</label>
-				<input type="text" name="first_name">
-				<br/>
-
-				<label for="last_name">Customer Last Name:</label>
-				<input type="text" name="last_name">
-				<br/>
+				<label for="full_name">Customer Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 
 				<input type="submit" value="Update">
 
@@ -187,13 +191,13 @@ add_rm_update_customers.handlebars
 			<!-- Delete Customer Favorite Creator-->
 			<form action="/add_rm_update_customers" method="post">
 
-				<label for="first_name">Customer First Name:
-				<input type="text" name="first_name">
-				<br/>
-
-				<label for="last_name">Customer Last Name:</label>
-				<input type="text" name="last_name">
-				<br/>
+				<label for="full_name">Customer Full Name:</label>
+				<input list="full_names" type="text" name="full_name">
+				<datalist id="full_names">
+			        {{#each customer}}
+			        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+			        {{/each}}
+			    </datalist>
 
 				<input type="submit" value="Update">
 				<input id="add" name="add" type="hidden" value="deleteCustomerFavoriteGenre">
