@@ -14,6 +14,8 @@ rental.handlebars
 <main>
 
 	{{#each game}}
+	<form action="/customer-rentals" method="post">
+
 		<table class="pretty-tables">
 
 			<tr>
@@ -66,6 +68,7 @@ rental.handlebars
 					{{this.genres}}
 				</td>
 			</tr>
+
 			<tr>
 				<td>
 					Creators
@@ -74,7 +77,27 @@ rental.handlebars
 					{{this.creators}}
 				</td>
 			</tr>
+
+			<tr>
+				<td>
+					Due Date
+				</td>
+				<td>
+					{{this.due_date}}
+				</td>
+			</tr>
+
+			<tr>
+		        <td colspan="2">
+		        	<input id="rental_ID" name="rental_ID" type="hidden" value={{this.rental_ID}}>
+		        	<input id="customer_ID" name="customer_ID" type="hidden" value={{this.customer_ID}}>
+		        	<input type="submit" value="Return Rental">
+		        </td>
+		    </tr>
+
 		</table>
+
+	</form>
 	{{/each}}
 
 

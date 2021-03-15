@@ -115,6 +115,18 @@ nav a {
 	 text-align: center;
 }
 
+.pretty-forms .captioned-title {
+	margin-bottom: 5px;
+}
+
+.pretty-forms .subtitle {
+	display: block;
+	text-align: center;
+	font-style: italic;
+	font-size: 0.9em;
+	margin-bottom: 10px;
+}
+
 .pretty-forms label {
 	display: block;
 	margin-bottom: 5px;

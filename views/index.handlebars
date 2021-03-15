@@ -21,12 +21,14 @@ index.handlebars
 
     <form id="searchCustomer" method="get" action="/customer">
 
-      <label for="fname">First Name:</label>
-      <input type="text" id="fname" name="fname">
+      <label for="full_name">Full Name:</label>
+      <input list="customer_name" type="text" id="full_name" name="full_name">
+      <datalist id="customer_name">
+        {{#each customer}}
+        <option data-value={{this.full_name}}>{{this.full_name}}</option>
+        {{/each}}
+      </datalist>
       <br/>
-
-      <label for="lname">Last Name:</label>
-      <input type="text" id="lname" name="lname"><br/>
 
       <input type="submit" value="Submit">
 
@@ -42,7 +44,7 @@ index.handlebars
 
     <form id="searchGame" method="get" action="/boardgame">
 
-      <input type="text" name="gameInfo" id="gameInfo">
+      <input type="text" list="games" name="gameInfo" id="gameInfo">
 
       <!-- Search By</h3> -->
       <div class="filter-input-container">
