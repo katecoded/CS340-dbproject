@@ -1029,7 +1029,6 @@ app.get('/boardgame', function(req, res) {
 			renderSearchedGames(req, res, gameList, 'boardgame');
 		});
 	}
-
 });
 
 
@@ -1074,6 +1073,50 @@ app.get('/rent-a-game', function(req, res) {
 
 					res.render('rent-a-game', gameList);
 				});
+			});
+		});
+	});
+});
+
+app.post('/rent-a-game', function(req, res){
+	var full_arr = req.body.customer_name.split(" ");
+  var first_name = full_arr[0];
+  var last_name = full_arr[1];
+
+	var query = "SELECT customer_ID FROM Customers WHERE first_name = ? AND last_name = ?";
+	var inserts = [first_name, last_name];
+	mysql.pool.query(query, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+		var customer_ID = results[0].customer_ID;
+		console.log(results);
+		var query2 = "INSERT INTO Rentals VALUES (NULL, ?,?,?, 0)";
+		var inserts2 = [customer_ID, req.body.board_game_ID, req.body.due_date];
+		mysql.pool.query(query2, inserts2, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+
+			var customerList = {};
+
+			//get all customers - for dropdown list in customer search
+			var query3 = "SELECT * FROM Customers";
+
+			mysql.pool.query(query3, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+
+				customerList.customer = results;
+
+				//get the customer's full name
+				//customerList = addFullName(customerList);
+				//console.log(customerList);
+				res.render('index', customerList);
 			});
 		});
 	});

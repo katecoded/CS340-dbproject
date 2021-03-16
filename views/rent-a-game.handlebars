@@ -88,7 +88,12 @@ return.handlebars
 			{{/each}}
 	</datalist>
 	<br/>
-	<input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
+	<label for="due_date">Due Date: </label>
+	<input id="due_date" name="due_date" type="text">
+	<br/>
+	{{#each game}}
+		<input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
+	{{/each}}
 	<input type="submit" value="Rent">
 
 </form>
