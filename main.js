@@ -216,7 +216,7 @@ function addFavoriteCreators(customerList, creatorList) {
 
 
 
-/***** MAIN PAGE (index.handlebars) - Contains Search Functionality for Board_Games and Customers *****/
+/***** MAIN PAGE GET (index.handlebars) - Contains Search Functionality for Board_Games and Customers *****/
 app.get('/', function(req, res) {
 
 	var customerList = {};
@@ -298,10 +298,9 @@ function renderAddRmGames(req, res) {
 }
 
 
-/*****
-ADD/EDIT GAMES PAGE (add_rm_games.handlebars) - Contains the ability to INSERT/DELETE/UPDATE Board_Games,
-INSERT/DELETE Game_Creators and Game_Genres, ADD Genres and Creators, and UPDATE Creators.
-*****/
+/***** 
+ADD/EDIT GAMES PAGE POST & GET (add_rm_games.handlebars) Contains the ability to INSERT/DELETE/UPDATE Board_Games,
+INSERT/DELETE Game_Creators and Game_Genres, ADD Genres and Creators, and UPDATE Creators.*****/
 app.get('/add_rm_games', function(req, res) {
 	renderAddRmGames(req, res);
 });
@@ -469,8 +468,10 @@ app.post('/add_rm_games', function(req, res) {
 
 		});
 	}
-	//Delete existing genre in game
+
+	//delete an existing genre from a game
 	else if (req.body.add == "deleteGenre"){
+
 		var query = "DELETE FROM Game_Genres WHERE board_game_ID = (SELECT board_game_ID FROM Board_Games WHERE game_name = ?) AND genre_ID = (SELECT genre_ID FROM Genres WHERE genre_name = ?)";
 		var inserts = [req.body.game_name, req.body.genre_name];
 
@@ -483,6 +484,7 @@ app.post('/add_rm_games', function(req, res) {
 		});
 	}
 
+	//delete an existing creator from a game
 	else if(req.body.add == "deleteCreator") {
 
 		//if the last name is an empty string, replace with NULL
@@ -807,7 +809,7 @@ app.post('/add_rm_update_customers', function(req, res) {
 });
 
 
-/***** VIEW ALL CREATORS PAGE (creators) - Contains ability to SELECT Creators *****/
+/***** VIEW ALL CREATORS PAGE GET (creators.handlebars) - Contains ability to SELECT Creators *****/
 app.get('/creators', function(req, res) {
 
 	var creatorList = {};
@@ -1032,9 +1034,12 @@ app.get('/boardgame', function(req, res) {
 });
 
 
-//rent-a-game
+/***** RENT A GAME PAGE GET (rent-a-game.handlebars) - displays the game to be rented*****/
 app.get('/rent-a-game', function(req, res) {
+
 	var gameList = {};
+
+	//first, select the board game to be rented
 	var query = "SELECT * FROM Board_Games WHERE board_game_ID = ?";
 	var inserts = [req.query.board_game_ID];
 	mysql.pool.query(query, inserts, function(error, results, fields) {
@@ -1043,7 +1048,8 @@ app.get('/rent-a-game', function(req, res) {
 			res.end();
 		}
 		gameList.game = results;
-		console.log(results);
+		
+		// next, get the Genres of that game to display
 		var query2 = "SELECT Game_Genres.genre_ID, Game_Genres.board_game_ID, Genres.genre_name FROM Game_Genres INNER JOIN Genres ON Game_Genres.genre_ID = Genres.genre_ID";
 		mysql.pool.query(query2, function(error, results, fields) {
 			if(error) {
@@ -1052,6 +1058,8 @@ app.get('/rent-a-game', function(req, res) {
 			}
 			gameList.game[0].genres = "";
 			gameList = addGenres(gameList, results);
+
+			//next, get the Creators of that game to display
 			var query3 = "SELECT Game_Creators.creator_ID, Game_Creators.board_game_ID, Creators.first_name, Creators.last_name FROM Game_Creators INNER JOIN Creators ON Game_Creators.creator_ID = Creators.creator_ID";
 			mysql.pool.query(query3, function(error, results, fields) {
 				if(error) {
@@ -1061,6 +1069,7 @@ app.get('/rent-a-game', function(req, res) {
 				gameList.game[0].creators = "";
 				gameList = addCreators(gameList, results);
 
+				//finally, get the Customers for the dynamic dropdown of Customer names
 				var query4 = "SELECT * FROM Customers";
 				mysql.pool.query(query4, function(error, results, fields) {
 					if(error) {
@@ -1078,6 +1087,10 @@ app.get('/rent-a-game', function(req, res) {
 	});
 });
 
+/***** 
+RENT A GAME PAGE POST (rent-a-game.handlebars) - rents the game to the specified Customer with the specified due date, 
+and returns to the main index.handlebars page
+*****/
 app.post('/rent-a-game', function(req, res){
 
 	//split customer full name into first and last name
