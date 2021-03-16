@@ -147,7 +147,7 @@ function addCreators(gameList, creatorList) {
 
 function addFavoriteGenres(customerList, genreList) {
 	/*
-	Takes two JSONS, one with a list of customers and the other, genres. Changes the 
+	Takes two JSONS, one with a list of customers and the other, genres. Changes the
 	genre ids of each customer's favorite customer to the genre name.
 	Returns the customerList.
 	*/
@@ -178,7 +178,7 @@ function addFavoriteGenres(customerList, genreList) {
 
 function addFavoriteCreators(customerList, creatorList) {
 	/*
-	Takes two JSONS, one with a list of customers and the other, creators. Changes the 
+	Takes two JSONS, one with a list of customers and the other, creators. Changes the
 	creator ids of each customer's favorite creator to the creator name.
 	Returns the customerList.
 	*/
@@ -298,15 +298,13 @@ function renderAddRmGames(req, res) {
 }
 
 
-/***** 
-ADD/EDIT GAMES PAGE (add_rm_games.handlebars) - Contains the ability to INSERT/DELETE/UPDATE Board_Games, 
-INSERT/DELETE Game_Creators and Game_Genres, ADD Genres and Creators, and UPDATE Creators. 
+/*****
+ADD/EDIT GAMES PAGE (add_rm_games.handlebars) - Contains the ability to INSERT/DELETE/UPDATE Board_Games,
+INSERT/DELETE Game_Creators and Game_Genres, ADD Genres and Creators, and UPDATE Creators.
 *****/
 app.get('/add_rm_games', function(req, res) {
-
 	renderAddRmGames(req, res);
 });
-
 
 app.post('/add_rm_games', function(req, res) {
 
@@ -383,9 +381,7 @@ app.post('/add_rm_games', function(req, res) {
 					renderAddRmGames(req, res);
 				});
 			}
-
 		});
-
 	}
 
 	//add creator to existing game
@@ -415,10 +411,8 @@ app.post('/add_rm_games', function(req, res) {
 			}
 
 			//console.log(results);
-
 			//if the resulting query was empty, insert the creator into Creators first
 			if(results.length == 0) {
-
 
 				//insert the creator into Creators (if it already exists, ignore it)
 				var query = "INSERT IGNORE INTO Creators VALUES (NULL, ?, ?, NULL)";
@@ -590,7 +584,7 @@ app.post('/add_rm_games', function(req, res) {
 });
 
 function renderAddRmCustomer(req, res) {
-	/* 
+	/*
 	Renders the add_rm_update_customers.handlebars page.
 	*/
 
@@ -952,11 +946,28 @@ function renderSearchedGames(req, res, gameList, page) {
 
 			gameList = addCreators(gameList, results);
 			//console.log(gameList);
-
-			res.render(page, gameList);
+			var query4 = "SELECT * FROM Board_Games INNER JOIN Rentals ON Board_Games.board_game_ID = Rentals.board_game_ID WHERE returned = 0";
+			mysql.pool.query(query4, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+				//console.log(results);
+				for (var i = 0; i < gameList.game.length; i++){
+					for (var j = 0; j < results.length; j++){
+						if (results[j].board_game_ID == gameList.game[i].board_game_ID){
+							gameList.game[i].available = false;
+						}
+					}
+					if(typeof gameList.game[i].available == 'undefined'){
+						gameList.game[i].available = true;
+					}
+				}
+				//console.log(gameList);
+				res.render(page, gameList);
+			});
 		});
 	});
-
 }
 
 /***** GAME SEARCH RESULTS PAGE (boardgame) - Contains ability to SELECT from Board_Games, Creators, Game_Genres, Game_Creators, and Genres *****/
@@ -1024,14 +1035,53 @@ app.get('/boardgame', function(req, res) {
 
 //rent-a-game
 app.get('/rent-a-game', function(req, res) {
-	res.render('rent-a-game');
+	var gameList = {};
+	var query = "SELECT * FROM Board_Games WHERE board_game_ID = ?";
+	var inserts = [req.query.board_game_ID];
+	mysql.pool.query(query, inserts, function(error, results, fields) {
+		if(error) {
+			res.write(JSON.stringify(error));
+			res.end();
+		}
+		gameList.game = results;
+		console.log(results);
+		var query2 = "SELECT Game_Genres.genre_ID, Game_Genres.board_game_ID, Genres.genre_name FROM Game_Genres INNER JOIN Genres ON Game_Genres.genre_ID = Genres.genre_ID";
+		mysql.pool.query(query2, function(error, results, fields) {
+			if(error) {
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			gameList.game[0].genres = "";
+			gameList = addGenres(gameList, results);
+			var query3 = "SELECT Game_Creators.creator_ID, Game_Creators.board_game_ID, Creators.first_name, Creators.last_name FROM Game_Creators INNER JOIN Creators ON Game_Creators.creator_ID = Creators.creator_ID";
+			mysql.pool.query(query3, function(error, results, fields) {
+				if(error) {
+					res.write(JSON.stringify(error));
+					res.end();
+				}
+				gameList.game[0].creators = "";
+				gameList = addCreators(gameList, results);
+
+				var query4 = "SELECT * FROM Customers";
+				mysql.pool.query(query4, function(error, results, fields) {
+					if(error) {
+						res.write(JSON.stringify(error));
+						res.end();
+					}
+
+					gameList.customer = results;
+					gameList = addFullName(gameList);
+
+					res.render('rent-a-game', gameList);
+				});
+			});
+		});
+	});
 });
-
-
 
 function addGames(rentalList, gameList) {
 	/*
-	Takes two JSONs, one with a list of rentals and the other, games, and 
+	Takes two JSONs, one with a list of rentals and the other, games, and
 	adds all of the games with the same board_game_ID as the rental list
 	to the list of rentals.
 	Returns the rentalList.
@@ -1059,7 +1109,7 @@ function addGames(rentalList, gameList) {
 
 function addRentalInfo(rentalList) {
 	/*
-	Takes a JSON with a list of rentals and games, and adds the rental info to the 
+	Takes a JSON with a list of rentals and games, and adds the rental info to the
 	games list.
 	Returns the rentalList.
 	*/

@@ -12,9 +12,8 @@ boardgame.handlebars
 
 
 <main>
-
-  
   {{#each game}}
+<form action="/rent-a-game" method="get">
   <table class="pretty-tables">
 
     <tr>
@@ -32,7 +31,7 @@ boardgame.handlebars
       </td>
     </tr>
 
-    <tr> 
+    <tr>
       <td>
         Maximum # Of Players
       </td>
@@ -67,7 +66,7 @@ boardgame.handlebars
         {{this.genres}}
       </td>
     </tr>
-    
+
     <tr>
       <td>
         Creators
@@ -77,8 +76,20 @@ boardgame.handlebars
       </td>
     </tr>
 
+    <tr>
+          <td colspan="2">
+            {{#if this.available}}
+              <input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
+              <input type="submit" value="Rent">
+            {{else}}
+              Not available
+            {{/if}}
+          </td>
+      </tr>
+
   </table>
+  </form>
   {{/each}}
 
-  
+
 </main>

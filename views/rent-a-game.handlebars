@@ -10,31 +10,86 @@ Katelyn Lindsey
 return.handlebars
 -->
 
-
 <main>
 
-	<!-- return game -->
-	<ul>
+	<form action="/rent-a-game" method="post">
+		{{#each game}}
+		<table class="pretty-tables">
 
-		<li>
-			Game Title: A Game of Thrones Boardgame Second Edition
-		</li>
+			<tr>
+					<th colspan="2">
+						{{this.game_name}}
+					</th>
+			</tr>
 
-		<li>
-			Rented By: Michael Scott
-		</li>
+			<tr>
+					<td>
+						Minimum # Of Players
+					</td>
+					<td>
+						{{this.min_num_player}}
+					</td>
+			</tr>
 
-		<li>
-			Due Date: 11/17/2009
-		</li>	
+			<tr>
+					<td>
+						Maximum # Of Players
+					</td>
+					<td>
+						{{this.max_num_player}}
+					</td>
+			</tr>
 
-		<li>
-			Overdue: Yes
-		</li>
+			<tr>
+					<td>
+						Rating
+					</td>
+					<td>
+						{{this.rating}}/10
+					</td>
+			</tr>
 
-		<button inactive>Return</button>
+			<tr>
+					<td>
+						Year Created
+					</td>
+					<td>
+						{{this.year_created}}
+					</td>
+			</tr>
 
-	</ul>
+			<tr>
+				<td>
+					Genres
+				</td>
+				<td>
+					{{this.genres}}
+				</td>
+			</tr>
+
+			<tr>
+				<td>
+					Creators
+				</td>
+				<td>
+					{{this.creators}}
+				</td>
+			</tr>
+
+		</table>
+{{/each}}
 
 
+	<label for="customer_name">Full Name:</label>
+	<input list="customer_names" type="text" name="customer_name">
+	<datalist id="customer_names">
+		{{#each customer}}
+			<option data-value={{this.full_name}}>{{this.full_name}}</option>
+			{{/each}}
+	</datalist>
+	<br/>
+	<input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
+	<input type="submit" value="Rent">
+
+</form>
 </main>
