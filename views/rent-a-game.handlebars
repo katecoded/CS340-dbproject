@@ -13,6 +13,7 @@ return.handlebars
 <main>
 
 	<form action="/rent-a-game" method="post">
+
 		{{#each game}}
 		<table class="pretty-tables">
 
@@ -77,24 +78,30 @@ return.handlebars
 			</tr>
 
 		</table>
-{{/each}}
+		{{/each}}
 
+		<div class="pretty-rent-form">
 
-	<label for="customer_name">Full Name:</label>
-	<input list="customer_names" type="text" name="customer_name">
-	<datalist id="customer_names">
-		{{#each customer}}
-			<option data-value={{this.full_name}}>{{this.full_name}}</option>
+			<label for="customer_name">Full Name:</label>
+			<input list="customer_names" type="text" name="customer_name">
+			<datalist id="customer_names">
+				{{#each customer}}
+					<option data-value={{this.full_name}}>{{this.full_name}}</option>
+				{{/each}}
+			</datalist>
+			<br/>
+
+			<label for="due_date">Due Date <span class="italics">(YYYY-MM-DD)</span>: </label>
+			<input id="due_date" name="due_date" type="text">
+			<br/>
+
+			{{#each game}}
+				<input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
 			{{/each}}
-	</datalist>
-	<br/>
-	<label for="due_date">Due Date: </label>
-	<input id="due_date" name="due_date" type="text">
-	<br/>
-	{{#each game}}
-		<input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
-	{{/each}}
-	<input type="submit" value="Rent">
 
-</form>
+			<input type="submit" value="Rent">
+		</div>
+
+	</form>
+
 </main>

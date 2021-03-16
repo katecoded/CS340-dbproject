@@ -12,84 +12,86 @@ boardgame.handlebars
 
 
 <main>
+
   {{#each game}}
-<form action="/rent-a-game" method="get">
-  <table class="pretty-tables">
+  <form action="/rent-a-game" method="get">
 
-    <tr>
-      <th colspan="2">
-        {{this.game_name}}
-      </th>
-    </tr>
+    <table class="pretty-tables">
 
-    <tr>
-      <td>
-        Minimum # Of Players
-      </td>
-      <td>
-        {{this.min_num_player}}
-      </td>
-    </tr>
+      <tr>
+        <th colspan="2">
+          {{this.game_name}}
+        </th>
+      </tr>
 
-    <tr>
-      <td>
-        Maximum # Of Players
-      </td>
-      <td>
-        {{this.max_num_player}}
-      </td>
-    </tr>
+      <tr>
+        <td>
+          Minimum # Of Players
+        </td>
+        <td>
+          {{this.min_num_player}}
+        </td>
+      </tr>
 
-    <tr>
-      <td>
-        Rating
-      </td>
-      <td>
-        {{this.rating}}
-      </td>
-    </tr>
+      <tr>
+        <td>
+          Maximum # Of Players
+        </td>
+        <td>
+          {{this.max_num_player}}
+        </td>
+      </tr>
 
-    <tr>
-      <td>
-        Year Created
-      </td>
-      <td>
-        {{this.year_created}}
-      </td>
-    </tr>
+      <tr>
+        <td>
+          Rating
+        </td>
+        <td>
+          {{this.rating}}
+        </td>
+      </tr>
 
-    <tr>
-      <td>
-        Genres
-      </td>
-      <td>
-        {{this.genres}}
-      </td>
-    </tr>
+      <tr>
+        <td>
+          Year Created
+        </td>
+        <td>
+          {{this.year_created}}
+        </td>
+      </tr>
 
-    <tr>
-      <td>
-        Creators
-      </td>
-      <td>
-        {{this.creators}}
-      </td>
-    </tr>
+      <tr>
+        <td>
+          Genres
+        </td>
+        <td>
+          {{this.genres}}
+        </td>
+      </tr>
 
-    <tr>
+      <tr>
+        <td>
+          Creators
+        </td>
+        <td>
+          {{this.creators}}
+        </td>
+      </tr>
+
+      <tr>
           <td colspan="2">
             {{#if this.available}}
               <input id="board_game_ID" name="board_game_ID" type="hidden" value={{this.board_game_ID}}>
               <input type="submit" value="Rent">
             {{else}}
-              Not available
+              <span class="unavailable">Not available</span>
             {{/if}}
           </td>
       </tr>
 
-  </table>
+    </table>
+
   </form>
   {{/each}}
-
 
 </main>

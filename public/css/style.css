@@ -51,6 +51,10 @@ a:hover, a:active {
 	background-color: #dcdcdc;
 }
 
+.italics {
+	font-style: italic;
+}
+
 
 /* Navigation Bar */
 nav {
@@ -72,6 +76,13 @@ nav a {
 	border: none;
 	border-radius: 5px;
 	padding: 5px 10px;
+}
+
+
+/* Unavailable Rentals */
+.unavailable {
+	text-align: center;
+	display: block;
 }
 
 
@@ -156,6 +167,26 @@ nav a {
 
 .pretty-forms input[type=submit]:hover {
 	background-color: #e8e8e8;
+}
+
+.pretty-rent-form {
+	display: block;
+	max-width: 500px;
+	min-width: 300px;
+	padding: 1px 15px;
+	border-radius: 5px;
+	margin: 0px auto 20px auto;
+	text-align: center;
+}
+
+.pretty-rent-form input[type=text], .pretty-rent-form input[type=submit] {
+	margin-bottom: 10px;
+	width: 50%;
+	padding: 7px;
+}
+
+.pretty-rent-form label {
+	display: block;
 }
 
 

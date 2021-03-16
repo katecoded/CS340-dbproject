@@ -1079,19 +1079,25 @@ app.get('/rent-a-game', function(req, res) {
 });
 
 app.post('/rent-a-game', function(req, res){
-	var full_arr = req.body.customer_name.split(" ");
-  var first_name = full_arr[0];
-  var last_name = full_arr[1];
 
+	//split customer full name into first and last name
+	var full_arr = req.body.customer_name.split(" ");
+	var first_name = full_arr[0];
+	var last_name = full_arr[1];
+
+	//first, get the customer id that has the specified first and last name
 	var query = "SELECT customer_ID FROM Customers WHERE first_name = ? AND last_name = ?";
 	var inserts = [first_name, last_name];
+
 	mysql.pool.query(query, inserts, function(error, results, fields) {
 		if(error) {
 			res.write(JSON.stringify(error));
 			res.end();
 		}
+
 		var customer_ID = results[0].customer_ID;
-		console.log(results);
+		
+		//next, insert into rentals with the given values
 		var query2 = "INSERT INTO Rentals VALUES (NULL, ?,?,?, 0)";
 		var inserts2 = [customer_ID, req.body.board_game_ID, req.body.due_date];
 		mysql.pool.query(query2, inserts2, function(error, results, fields) {
@@ -1114,8 +1120,8 @@ app.post('/rent-a-game', function(req, res){
 				customerList.customer = results;
 
 				//get the customer's full name
-				//customerList = addFullName(customerList);
-				//console.log(customerList);
+				customerList = addFullName(customerList);
+
 				res.render('index', customerList);
 			});
 		});
