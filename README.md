@@ -5,13 +5,4 @@ Otherworldly Games is a board game library on an alien planet. Aliens across the
 
 **Notes for Use**
 
-- dbcon.js must be updated with actual username and password in order to function
-
-
-**If using on flip servers, here is how to make handlebars play nice:**
-
-First, rollback handlebars version like so: npm install -save express-handlebars@4.0.4
-
-Then, follow this tutorial to fix an error in the express-handlebars.js file:
-
-https://www.youtube.com/watch?v=sw6rcXZiRos&feature=youtu.be&t=1441
+- dbcon.js must be updated with actual username and password to database in order to function
